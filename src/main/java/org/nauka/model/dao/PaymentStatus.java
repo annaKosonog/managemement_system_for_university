@@ -1,4 +1,4 @@
-package org.nauka.management_system_for_university.model.dao;
+package org.nauka.model.dao;
 
 public enum PaymentStatus {
     PAID,

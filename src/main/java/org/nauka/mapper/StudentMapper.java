@@ -1,9 +1,9 @@
-package org.nauka.management_system_for_university.mapper;
+package org.nauka.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.nauka.management_system_for_university.model.dao.Student;
-import org.nauka.management_system_for_university.model.dto.StudentDto;
+import org.nauka.model.dao.Student;
+import org.nauka.model.dto.StudentDto;
 
 @Mapper(componentModel = "spring")
 public interface StudentMapper {

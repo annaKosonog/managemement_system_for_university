@@ -1,4 +1,4 @@
-package org.nauka.management_system_for_university.model.dto;
+package org.nauka.model.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
