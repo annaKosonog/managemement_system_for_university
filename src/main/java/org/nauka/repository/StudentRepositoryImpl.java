@@ -7,9 +7,17 @@ import java.util.List;
 
 public class StudentRepositoryImpl implements StudentRepository {
     private final List<Student> students = new ArrayList<>();
+    private long actualId = 1;
 
     @Override
     public boolean save(Student student) {
         return students.add(student);
     }
+
+    @Override
+    public Long generateId() {
+        return actualId++;
+    }
+
+
 }

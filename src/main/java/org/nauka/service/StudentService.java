@@ -1,32 +1,27 @@
 package org.nauka.service;
 
-import lombok.RequiredArgsConstructor;
 import org.nauka.mapper.StudentMapper;
 import org.nauka.model.dao.Student;
 import org.nauka.model.dto.StudentDto;
+import org.nauka.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 
-@RequiredArgsConstructor
 @Service
 public class StudentService {
-    private final List<Student> students = new ArrayList<>();
-    private Long actualId = 1L;
+    private final StudentRepository repository;
 
-    private final StudentMapper studentMapper = StudentMapper.INSTANCE;
+    private final StudentMapper studentMapper;
+
+    public StudentService(StudentRepository repository, StudentMapper studentMapper) {
+        this.repository = repository;
+        this.studentMapper = studentMapper;
+    }
 
     public StudentDto addNewStudent(StudentDto studentDto) {
-        Student studentDao = studentMapper.toDao(studentDto);
-        studentDao.setStudentId(generateId());
-        students.add(studentDao);
-        return studentMapper.toDto(studentDao);
+        Long id = repository.generateId();
+        Student saveStudent = studentMapper.toDao(studentDto, id);
+        repository.save(saveStudent);
+        return studentMapper.toDto(saveStudent);
     }
-
-
-    private Long generateId() {
-        return actualId++;
-    }
-
 }
