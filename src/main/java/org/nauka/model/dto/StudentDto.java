@@ -1,17 +1,16 @@
 package org.nauka.model.dto;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 @Getter
-@RequiredArgsConstructor
 public class StudentDto {
-    final private Long studentId;
-    final private String name;
-    final private Long indexNumber;
-    final private String e_mail;
+    private String name;
+    private Long indexNumber;
+    private String e_mail;
+
+
 }
