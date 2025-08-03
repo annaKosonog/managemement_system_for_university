@@ -2,7 +2,10 @@ package org.nauka.model.dao;
 
 import lombok.*;
 
+import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @EqualsAndHashCode
 @ToString
@@ -12,17 +15,6 @@ public class Student {
     private String name;
     private Long indexNumber;
     private String e_mail;
+    private List<Semester> semesters;
 
-    public Student(String name, Long indexNumber, String e_mail) {
-        this.name = name;
-        this.indexNumber = indexNumber;
-        this.e_mail = e_mail;
-    }
-
-    public Student(Long studentId, String name, Long indexNumber, String e_mail) {
-        this.studentId = studentId;
-        this.name = name;
-        this.indexNumber = indexNumber;
-        this.e_mail = e_mail;
-    }
 }

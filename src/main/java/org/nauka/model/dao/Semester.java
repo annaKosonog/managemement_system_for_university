@@ -1,11 +1,12 @@
 package org.nauka.model.dao;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Getter
 @EqualsAndHashCode
 @ToString
@@ -14,4 +15,11 @@ public class Semester {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
+
+    public Semester(Long semesterId, String name, LocalDate startDate, LocalDate endDate) {
+        this.semesterId = semesterId;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 }
