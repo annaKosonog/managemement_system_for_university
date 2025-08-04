@@ -1,9 +1,6 @@
 package org.nauka.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.nauka.model.dao.PaymentStatus;
 import org.nauka.model.dao.Semester;
 
@@ -14,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Getter
 public class TuitionFeeDto {
     private StudentDto studentDto;
 

@@ -28,6 +28,12 @@ public class TuitionFeeService {
     private StudentMapper studentMapper;
 
     public List<TuitionFeeDto> assignTuitionToSemesters(StudentDto studentDto, List<Semester> semesters, BigDecimal amount) {
+        if (amount == null) {
+            throw new IllegalArgumentException("Amount cannot be null");
+        }
+        if (amount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Amount must be positive");
+        }
         List<TuitionFeeDto> assigned = new ArrayList<>();
         Student student = studentMapper.toDao(studentDto, studentRepository.generateId());
         for (Semester semester : semesters) {
