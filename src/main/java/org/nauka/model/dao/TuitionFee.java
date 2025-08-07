@@ -1,6 +1,7 @@
 package org.nauka.model.dao;
 
 import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 public class TuitionFee {
     private Long tuitionFeeId;
 
+    @Setter
     private Student student;
 
     private Semester semester;
@@ -22,14 +24,16 @@ public class TuitionFee {
 
     private PaymentStatus paymentStatus;
 
-    public static TuitionFee createTuition(Student student, Semester semester, BigDecimal amount,
-                                           LocalDate dueDate, PaymentStatus status) {
-        TuitionFee fee = new TuitionFee();
-        fee.student = student;
-        fee.semester = semester;
-        fee.amount = amount;
-        fee.paymentDueDate = dueDate;
-        fee.paymentStatus = status;
-        return fee;
-    }
+
+   public static TuitionFee of(Long idStudent, Semester idSemester, BigDecimal amount, PaymentStatus status){
+       Student newStudent = new Student();
+       newStudent.setIdStudent(idStudent);
+
+       TuitionFee fee = new TuitionFee();
+       fee.student = newStudent;
+       fee.semester = idSemester;
+       fee.amount = amount;
+       fee.paymentStatus = status;
+       return fee;
+   }
 }

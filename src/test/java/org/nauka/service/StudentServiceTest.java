@@ -36,8 +36,8 @@ class StudentServiceTest {
         Student adamedKowalskiWithId = StudentDaoTestData.adamKowalskiWithId();
 
         when(studentRepository.generateId()).thenReturn(id);
-        when(studentMapper.toDao(adamDto, id)).thenReturn(adamedKowalskiWithId);
-        when(studentMapper.toDto(adamedKowalskiWithId)).thenReturn(adamDto);
+        when(studentMapper.toStudentDao(adamDto, id)).thenReturn(adamedKowalskiWithId);
+        when(studentMapper.toStudentDto(adamedKowalskiWithId)).thenReturn(adamDto);
 
         StudentDto result = studentService.addNewStudent(adamDto);
 
@@ -59,7 +59,7 @@ class StudentServiceTest {
 
         // mocki
         when(studentRepository.generateId()).thenReturn(id);
-        when(studentMapper.toDao(dto, id)).thenReturn(entity);
+        when(studentMapper.toStudentDao(dto, id)).thenReturn(entity);
         when(studentRepository.save(entity)).thenReturn(false);
 
         StudentDto result = studentService.addNewStudent(dto);

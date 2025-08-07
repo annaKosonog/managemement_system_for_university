@@ -19,5 +19,18 @@ public class StudentRepositoryImpl implements StudentRepository {
         return actualId++;
     }
 
+    @Override
+    public Student findById(Long idStudent) {
+        return students.stream()
+                .filter(student -> student.getIdStudent().equals(idStudent))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public void clear() {
+        students.clear();
+    }
+
 
 }

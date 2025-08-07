@@ -12,7 +12,7 @@ import static org.nauka.model.student.StudentDtoTestData.alaKotDto;
 
 public class TuitionFeeDtoTest {
     public static TuitionFeeDto tuitionFeePaidDto(){
-        return new TuitionFeeDto(adamKowalskiDto(), semesterSummer, new BigDecimal("2900"), LocalDate.of(2025,2,25), PaymentStatus.PAID);
+        return new TuitionFeeDto(adamKowalskiDto(), semesterSummer, new BigDecimal("1000"), LocalDate.of(2025,2,25), PaymentStatus.NOT_PAID);
     }
 
     public static TuitionFeeDto tuitionFeePendingDto(){

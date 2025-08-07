@@ -11,10 +11,10 @@ import java.util.List;
 @ToString
 public class Student {
     @Setter
-    private Long studentId;
+    private Long idStudent;
     private String name;
     private Long indexNumber;
-    private String e_mail;
+    private String email;
     private List<Semester> semesters;
 
 }

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @ToString
 @Getter
 public class TuitionFeeDto {
+
     private StudentDto studentDto;
 
     private Semester semester;
