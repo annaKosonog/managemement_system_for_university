@@ -1,13 +1,11 @@
 package org.nauka.model.dao;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
 
+@NoArgsConstructor
 @Getter
 @EqualsAndHashCode
 @ToString

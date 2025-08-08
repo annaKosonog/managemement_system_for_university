@@ -14,7 +14,7 @@ public class SemesterRepositoryImpl implements SemesterRepository {
         return semesters.stream()
                 .filter(semester -> semester.getSemesterId().equals(idSemester))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("Not found id semester" + idSemester));
     }
 
     @Override

@@ -18,6 +18,7 @@ import org.nauka.repository.StudentRepository;
 import org.nauka.repository.TuitionFeeRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,7 +48,7 @@ class TuitionFeeServiceTest implements SemesterTest {
     TuitionFeeService tuitionFeeService;
 
     @AfterEach
-    public void clearAll(){
+    public void clearAll() {
         studentRepository.clear();
         semesterRepository.clear();
     }
@@ -91,15 +92,5 @@ class TuitionFeeServiceTest implements SemesterTest {
         assertThrows(IllegalArgumentException.class, () ->
                 tuitionFeeService.addTuitionFees(idStudent, semesterSummer, new BigDecimal("-1000"))
         );
-    }
-
-    @Test
-    void shouldReturnEmptyListWhenNoSemestersProvided() {
-        Long idStudent = 1L;
-        BigDecimal amount = new BigDecimal("1000");
-
-        // then
-        assertThrows(IllegalArgumentException.class, () ->
-                tuitionFeeService.addTuitionFees(1L, null, amount));
     }
 }

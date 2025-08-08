@@ -24,7 +24,7 @@ public class StudentRepositoryImpl implements StudentRepository {
         return students.stream()
                 .filter(student -> student.getIdStudent().equals(idStudent))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("Not found id" + idStudent));
     }
 
     @Override
