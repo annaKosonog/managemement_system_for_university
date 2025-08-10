@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SemesterService {
-    private SemesterRepository semesterRepository;
+    private final SemesterRepository semesterRepository;
 
     public SemesterService(SemesterRepository semesterRepository) {
         this.semesterRepository = semesterRepository;

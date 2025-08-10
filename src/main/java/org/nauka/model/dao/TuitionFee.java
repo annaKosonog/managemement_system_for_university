@@ -22,6 +22,7 @@ public class TuitionFee {
 
     private LocalDate paymentDueDate;
 
+    @Setter
     private PaymentStatus paymentStatus;
 
 

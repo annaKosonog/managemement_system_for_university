@@ -47,4 +47,12 @@ public class TuitionFeeService {
             throw new IllegalArgumentException("Amount must be positive");
         }
     }
+
+    public TuitionFee getTuitionFeeById(Long idTuitionFee) {
+        TuitionFee tuitionFee = tuitionFeeRepository.findById(idTuitionFee);
+        if (tuitionFee == null) {
+            throw new IllegalArgumentException("Not found tuition fee by id: " + idTuitionFee);
+        }
+        return tuitionFee;
+    }
 }
