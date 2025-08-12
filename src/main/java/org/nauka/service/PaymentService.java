@@ -45,7 +45,7 @@ public class PaymentService {
 
         BigDecimal totalPaid = paymentRepository.sumPaymentsByTuitionFee(idTuitionFee);
 
-        if (totalPaid.compareTo(tuitionFee.getAmount()) >= 0) {
+        if (totalPaid.compareTo(tuitionFee.getAmount()) == 0) {
             tuitionFee.setPaymentStatus(PaymentStatus.PAID);
         } else if (totalPaid.compareTo(tuitionFee.getAmount()) > 0) {
             tuitionFee.setPaymentStatus(PaymentStatus.PARTIAL);
