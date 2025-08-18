@@ -16,6 +16,7 @@ public class Payment {
 
     private LocalDate paymentDate;
 
+    @Setter
     private BigDecimal amount;
 
     private TuitionFee tuitionFee;

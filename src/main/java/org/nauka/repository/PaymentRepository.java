@@ -7,9 +7,15 @@ import java.math.BigDecimal;
 
 @Repository
 public interface PaymentRepository {
+
+
+
+
     void savePayment(Payment payment);
 
     Long generateId();
 
     BigDecimal sumPaymentsByTuitionFee(Long idTuition);
+
+    Payment findByIdPayment(Long idPayment);
 }

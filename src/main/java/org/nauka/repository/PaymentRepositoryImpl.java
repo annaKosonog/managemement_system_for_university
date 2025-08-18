@@ -32,4 +32,14 @@ public class PaymentRepositoryImpl implements PaymentRepository {
                 .map(Payment::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
+    @Override
+    public Payment findByIdPayment(Long idPayment) {
+       return paymentsByTuitionFee.values()
+                .stream()
+                .flatMap(List::stream)
+                .filter(payment -> payment.getPaymentId().equals(idPayment))
+                .findFirst()
+                .orElseThrow();
+    }
 }
