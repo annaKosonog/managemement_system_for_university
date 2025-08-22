@@ -15,7 +15,7 @@ public interface PaymentRepository {
 
     Long generateId();
 
-    BigDecimal sumPaymentsByTuitionFee(Long idTuition);
+    BigDecimal sumPaymentsByTuitionFee(Long idPayment);
 
     Payment findByIdPayment(Long idPayment);
 }

@@ -20,7 +20,7 @@ public class TuitionFee {
 
     private BigDecimal amount;
 
-    private LocalDate paymentDueDate;
+    private LocalDate paymentDueDate; //termin płatności
 
     @Setter
     private PaymentStatus paymentStatus;
