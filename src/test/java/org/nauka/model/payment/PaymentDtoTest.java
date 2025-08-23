@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 import static org.nauka.model.student.StudentDtoTestData.adamKowalskiDto;
 import static org.nauka.model.student.StudentDtoTestData.alaKotDto;
-import static org.nauka.model.tuitionFee.TuitionFeeDaoTest.tuitionFeeOverdue;
 import static org.nauka.model.tuitionFee.TuitionFeeDtoTest.*;
 
 public class PaymentDtoTest {
@@ -16,10 +15,10 @@ public class PaymentDtoTest {
     }
 
     public static PaymentDto notPaidWithinFourteenDaysButWithoutInterestDto() {
-        return new PaymentDto(alaKotDto(), LocalDate.of(2025,3,10), new BigDecimal(1000), tuitionFeePendingDto());
+        return new PaymentDto(alaKotDto(), LocalDate.of(2025, 3, 10), new BigDecimal(1000), tuitionFeePendingDto());
     }
 
-    public static PaymentDto paymentAfterTheFinalPaymentDateWithInterestChargedDto(){
-        return new PaymentDto(alaKotDto(), LocalDate.of(2025,3,17), new BigDecimal(1000), tuitionFeeOverDueDto());
+    public static PaymentDto paymentAfterTheFinalPaymentDateWithInterestChargedDto() {
+        return new PaymentDto(alaKotDto(), LocalDate.of(2025, 3, 17), new BigDecimal(1000), tuitionFeeOverDueDto());
     }
 }

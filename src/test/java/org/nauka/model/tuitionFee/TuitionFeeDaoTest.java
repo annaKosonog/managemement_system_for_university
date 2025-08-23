@@ -17,7 +17,7 @@ public class TuitionFeeDaoTest {
     }
 
     public static TuitionFee changeStatusAndAmount() {
-        return new TuitionFee(1L, adamKowalskiWithId(), semesterWinter, new BigDecimal("1000"), LocalDate.of(2025, 2, 25), PaymentStatus.NOT_PAID);
+        return new TuitionFee(1L, adamKowalskiWithId(), semesterWinter, new BigDecimal("1000"), LocalDate.of(2025, 2, 25), PaymentStatus.PAID);
     }
 
     public static TuitionFee tuitionFeeNoPaid() {
