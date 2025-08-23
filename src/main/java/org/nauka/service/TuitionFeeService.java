@@ -2,7 +2,6 @@ package org.nauka.service;
 
 import lombok.RequiredArgsConstructor;
 import org.nauka.mapper.TuitionFeeMapper;
-import org.nauka.model.dao.Payment;
 import org.nauka.model.dao.PaymentStatus;
 import org.nauka.model.dao.Semester;
 import org.nauka.model.dao.TuitionFee;
@@ -11,13 +10,9 @@ import org.nauka.repository.PaymentRepository;
 import org.nauka.repository.SemesterRepository;
 import org.nauka.repository.StudentRepository;
 import org.nauka.repository.TuitionFeeRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.Clock;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 

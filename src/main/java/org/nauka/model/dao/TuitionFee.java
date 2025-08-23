@@ -26,15 +26,15 @@ public class TuitionFee {
     private PaymentStatus paymentStatus;
 
 
-   public static TuitionFee of(Long idStudent, Semester idSemester, BigDecimal amount, PaymentStatus status){
-       Student newStudent = new Student();
-       newStudent.setIdStudent(idStudent);
+    public static TuitionFee of(Long idStudent, Semester idSemester, BigDecimal amount, PaymentStatus status) {
+        Student newStudent = new Student();
+        newStudent.setIdStudent(idStudent);
 
-       TuitionFee fee = new TuitionFee();
-       fee.student = newStudent;
-       fee.semester = idSemester;
-       fee.amount = amount;
-       fee.paymentStatus = status;
-       return fee;
-   }
+        TuitionFee fee = new TuitionFee();
+        fee.student = newStudent;
+        fee.semester = idSemester;
+        fee.amount = amount;
+        fee.paymentStatus = status;
+        return fee;
+    }
 }

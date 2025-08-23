@@ -8,9 +8,6 @@ import java.math.BigDecimal;
 @Repository
 public interface PaymentRepository {
 
-
-
-
     void savePayment(Payment payment);
 
     Long generateId();

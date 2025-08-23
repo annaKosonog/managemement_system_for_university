@@ -8,7 +8,7 @@ import org.nauka.model.dto.StudentDto;
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
 
-    @Mapping(target = "studentId" , source = "id")
+    @Mapping(target = "studentId", source = "id")
     Student toStudentDao(StudentDto studentDto, Long id);
 
     StudentDto toStudentDto(Student student);

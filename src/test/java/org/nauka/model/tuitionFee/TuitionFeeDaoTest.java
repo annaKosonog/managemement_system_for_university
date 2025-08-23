@@ -16,15 +16,15 @@ public class TuitionFeeDaoTest {
         return new TuitionFee(1L, adamKowalskiWithId(), semesterWinter, new BigDecimal("1000"), LocalDate.of(2025, 2, 25), PaymentStatus.NOT_PAID);
     }
 
-    public static TuitionFee changeStatusAndAmount() {
-        return new TuitionFee(1L, adamKowalskiWithId(), semesterWinter, new BigDecimal("1000"), LocalDate.of(2025, 2, 25), PaymentStatus.PAID);
+    public static TuitionFee setStatusNotPaidWhenNoPayments() {
+        return new TuitionFee(1L, adamKowalskiWithId(), semesterWinter, new BigDecimal("1000"), LocalDate.of(2025, 2, 25), PaymentStatus.NOT_PAID);
     }
 
     public static TuitionFee tuitionFeeNoPaid() {
-        return new TuitionFee(2L, alaKotWithId(), semesterWinter, new BigDecimal("1000"), LocalDate.of(2025,2,28), PaymentStatus.NOT_PAID);
+        return new TuitionFee(2L, alaKotWithId(), semesterWinter, new BigDecimal("1000"), LocalDate.of(2025, 2, 28), PaymentStatus.NOT_PAID);
     }
 
     public static TuitionFee tuitionFeeOverdue() {
-        return new TuitionFee(3L, alaKotWithId(), semesterWinter, new BigDecimal(1000), LocalDate.of(2025,3,17), PaymentStatus.OVERDUE);
+        return new TuitionFee(3L, alaKotWithId(), semesterWinter, new BigDecimal(1000), LocalDate.of(2025, 3, 17), PaymentStatus.OVERDUE);
     }
 }

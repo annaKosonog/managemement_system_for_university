@@ -15,15 +15,15 @@ public class PaymentDaoTest {
     }
 
     public static Payment notPaidWithinFourteenDaysButWithoutInterest() {
-        return new Payment(2L, alaKotWithId(), LocalDate.of(2025,3,10), new BigDecimal(1000), tuitionFeeNoPaid());
+        return new Payment(2L, alaKotWithId(), LocalDate.of(2025, 3, 10), new BigDecimal(1000), tuitionFeeNoPaid());
     }
 
     public static Payment paymentAfterTheFinalPaymentDateWithInterestCharged() {
-        return new Payment(3L, alaKotWithId(), LocalDate.of(2025,3,17), new BigDecimal(1000), tuitionFeeOverdue());
+        return new Payment(3L, alaKotWithId(), LocalDate.of(2025, 3, 17), new BigDecimal(1000), tuitionFeeOverdue());
     }
 
     public static Payment noPaidAfterTheFinalPaymentDate() {
-        return new Payment(3L, alaKotWithId(), LocalDate.of(2025,3,29), new BigDecimal(1000), tuitionFeeNoPaid());
+        return new Payment(3L, alaKotWithId(), LocalDate.of(2025, 3, 29), new BigDecimal(1000), tuitionFeeNoPaid());
     }
 
 

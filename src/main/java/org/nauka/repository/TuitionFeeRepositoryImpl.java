@@ -34,5 +34,3 @@ public class TuitionFeeRepositoryImpl implements TuitionFeeRepository {
                 .orElseThrow(() -> new IllegalArgumentException("Not found id: " + idTuitionFee));
     }
 }
-
-//todo poprawić na HashMap
