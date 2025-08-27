@@ -1,16 +1,11 @@
 package org.nauka.repository;
 
 import org.nauka.model.dao.Student;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StudentRepository {
-
-    boolean save(Student student);
-
-    Long generateId();
-
-    Student findById(Long idStudent);
+public interface StudentRepository extends JpaRepository<Student, Long> {
 
     void clear();
 }

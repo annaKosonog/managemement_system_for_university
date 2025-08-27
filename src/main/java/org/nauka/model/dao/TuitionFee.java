@@ -1,22 +1,31 @@
 package org.nauka.model.dao;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode
 @ToString
 public class TuitionFee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long tuitionFeeId;
 
-    @Setter
+    @ManyToOne
     private Student student;
 
+    @ManyToOne
     private Semester semester;
+
+    @ManyToOne
+    private SemesterDirection semesterDirection;
 
     private BigDecimal amount;
 
@@ -28,7 +37,6 @@ public class TuitionFee {
 
     public static TuitionFee of(Long idStudent, Semester idSemester, BigDecimal amount, PaymentStatus status) {
         Student newStudent = new Student();
-        newStudent.setIdStudent(idStudent);
 
         TuitionFee fee = new TuitionFee();
         fee.student = newStudent;
