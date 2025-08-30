@@ -7,8 +7,6 @@ import org.nauka.model.dao.Student;
 import org.nauka.model.dao.TuitionFee;
 import org.nauka.model.dto.PaymentDto;
 import org.nauka.repository.PaymentRepository;
-import org.nauka.repository.StudentRepository;
-import org.nauka.repository.TuitionFeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,8 +18,7 @@ import java.time.LocalDate;
 public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final PaymentMapper paymentMapper;
-    private final StudentRepository studentRepository;
-    private final TuitionFeeRepository tuitionFeeRepository;
+    private final StudentService studentService;
     private final FinanceService financeService;
     private final TuitionFeeService tuitionFeeService;
     private final Clock clock;
@@ -31,18 +28,19 @@ public class PaymentService {
         BigDecimal totalAmount = financeService.calculateTotalAmount(payment);
         payment.setAmount(totalAmount);
 
-        paymentRepository.savePayment(payment);
+        paymentRepository.save(payment);
         tuitionFeeService.updateTuitionFeeStatus(idTuitionFee);
         return paymentMapper.toPaymentDto(payment);
     }
 
     private Payment createPayment(Long idStudent, Long idTuitionFee, BigDecimal amount) {
-        TuitionFee tuitionFee = tuitionFeeRepository.findById(idTuitionFee);
-        Student student = studentRepository.findById(idStudent);
+        TuitionFee tuitionFee = tuitionFeeService.getTuitionFeeById(idTuitionFee);
+
+        Student student = studentService.getStudentById(idStudent);
 
         //Utworzenie i zapisanie wpłaty
         return new Payment(
-                paymentRepository.generateId(),
+                idStudent,
                 student,
                 LocalDate.now(clock),
                 amount,

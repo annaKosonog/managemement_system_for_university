@@ -7,38 +7,31 @@ import org.nauka.model.dao.Semester;
 import org.nauka.model.dao.TuitionFee;
 import org.nauka.model.dto.TuitionFeeDto;
 import org.nauka.repository.PaymentRepository;
-import org.nauka.repository.SemesterRepository;
-import org.nauka.repository.StudentRepository;
 import org.nauka.repository.TuitionFeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
 public class TuitionFeeService {
     private final TuitionFeeRepository tuitionFeeRepository;
     private final PaymentRepository paymentRepository;
-    private final StudentRepository studentRepository;
-    private final SemesterRepository semesterRepository;
+    private final StudentService studentService;
+    private final SemesterService semesterService;
     private final TuitionFeeMapper tuitionFeeMapper;
 
-    public Map<Long, TuitionFeeDto> addTuitionFees(Long idStudent, Semester idSemester, BigDecimal amount) {
+    public TuitionFeeDto addTuitionFees(Long idStudent, Semester idSemester, BigDecimal amount) {
         validateAmount(amount);
 
-        Map<Long, TuitionFeeDto> tuitionFees = new HashMap<>();
         TuitionFee entity = TuitionFee.of(
-                studentRepository.findById(idStudent).getIdStudent(),
-                semesterRepository.findIdBySemester(idSemester.getSemesterId()),
+                studentService.getStudentById(idStudent),
+                semesterService.getSemesterById(idSemester.getSemesterId()),
                 amount,
                 PaymentStatus.NOT_PAID
         );
         tuitionFeeRepository.save(entity);
-        TuitionFeeDto tuitionFeeDto = tuitionFeeMapper.toDtoTuitionFeeDto(entity);
-        tuitionFees.put(idSemester.getSemesterId(), tuitionFeeDto);
-        return tuitionFees;
+        return tuitionFeeMapper.toDtoTuitionFeeDto(entity);
     }
 
     private void validateAmount(BigDecimal amount) {
@@ -48,19 +41,24 @@ public class TuitionFeeService {
     }
 
     public void updateTuitionFeeStatus(Long idTuitionFee) {
-        TuitionFee tuitionFee = tuitionFeeRepository.findById(idTuitionFee);
+        TuitionFee tuitionFeeById = getTuitionFeeById(idTuitionFee);
 
         // Suma wszystkich Payment.amount powiązanych z tą opłatą, wliczając odsetki
         BigDecimal totalPaid = paymentRepository.sumPaymentsByTuitionFee(idTuitionFee);
-        BigDecimal amountDue = tuitionFee.getAmount();
+        BigDecimal amountDue = tuitionFeeById.getAmount();
 
         if (totalPaid.compareTo(BigDecimal.ZERO) == 0) {
-            tuitionFee.setPaymentStatus(PaymentStatus.NOT_PAID);
+            tuitionFeeById.setPaymentStatus(PaymentStatus.NOT_PAID);
         } else if (totalPaid.compareTo(amountDue) >= 0) {
-            tuitionFee.setPaymentStatus(PaymentStatus.PAID);
+            tuitionFeeById.setPaymentStatus(PaymentStatus.PAID);
         } else {
-            tuitionFee.setPaymentStatus(PaymentStatus.PARTIAL);
+            tuitionFeeById.setPaymentStatus(PaymentStatus.PARTIAL);
         }
-        tuitionFeeRepository.save(tuitionFee);
+        tuitionFeeRepository.save(tuitionFeeById);
+    }
+
+    public TuitionFee getTuitionFeeById(Long id) {
+        return tuitionFeeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("TuitionFee with id " + id + " not found"));
     }
 }

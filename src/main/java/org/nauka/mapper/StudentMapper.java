@@ -9,7 +9,7 @@ import org.nauka.model.dto.StudentDto;
 public interface StudentMapper {
 
     @Mapping(target = "studentId", source = "id")
-    Student toStudentDao(StudentDto studentDto, Long id);
+    Student toStudentDao(StudentDto studentDto);
 
     StudentDto toStudentDto(Student student);
 }

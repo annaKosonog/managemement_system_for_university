@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -31,15 +30,15 @@ public class TuitionFee {
 
     private LocalDate paymentDueDate; //termin płatności
 
+
+    @Enumerated(EnumType.STRING)
     @Setter
     private PaymentStatus paymentStatus;
 
 
-    public static TuitionFee of(Long idStudent, Semester idSemester, BigDecimal amount, PaymentStatus status) {
-        Student newStudent = new Student();
-
+    public static TuitionFee of(Student student, Semester idSemester, BigDecimal amount, PaymentStatus status) {
         TuitionFee fee = new TuitionFee();
-        fee.student = newStudent;
+        fee.student = student;
         fee.semester = idSemester;
         fee.amount = amount;
         fee.paymentStatus = status;
