@@ -35,7 +35,6 @@ public class TuitionFee {
     @Setter
     private PaymentStatus paymentStatus;
 
-
     public static TuitionFee of(Student student, Semester idSemester, BigDecimal amount, PaymentStatus status) {
         TuitionFee fee = new TuitionFee();
         fee.student = student;

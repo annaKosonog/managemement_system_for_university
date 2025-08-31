@@ -163,6 +163,11 @@ public class TuitionFeeRepositoryImpl implements TuitionFeeRepository {
         return null;
     }
 
+    @Override
+    public void clear() {
+
+    }
+
     //    private final List<TuitionFee> tuitionFeeList = new ArrayList<>();
    /* private final Map<Long, TuitionFee> tuitionFeeMap = new HashMap<>();
 

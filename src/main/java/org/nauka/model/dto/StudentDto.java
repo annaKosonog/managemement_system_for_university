@@ -19,7 +19,6 @@ public class StudentDto {
     private List<PaymentDto> paymentsList;
     private List<SemesterDirection> semesterDirectionList;
 
-
     public static StudentDto of(String name, Long indexNumber, String e_mail, List<Semester> semesters, List<SemesterDirection> semesterDirections) {
         StudentDto studentDto = new StudentDto();
         studentDto.name = name;

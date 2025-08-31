@@ -59,6 +59,6 @@ public class TuitionFeeService {
 
     public TuitionFee getTuitionFeeById(Long id) {
         return tuitionFeeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("TuitionFee with id " + id + " not found"));
+                .orElseThrow(() -> new IllegalArgumentException("TuitionFee with id: " + id + " not found"));
     }
 }

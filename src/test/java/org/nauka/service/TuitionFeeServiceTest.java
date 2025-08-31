@@ -14,17 +14,16 @@ import org.nauka.model.dao.Student;
 import org.nauka.model.dao.TuitionFee;
 import org.nauka.model.dto.TuitionFeeDto;
 import org.nauka.repository.PaymentRepository;
-import org.nauka.repository.SemesterRepository;
-import org.nauka.repository.StudentRepository;
 import org.nauka.repository.TuitionFeeRepository;
 
 import java.math.BigDecimal;
-import java.util.Map;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.nauka.model.student.StudentDaoTestData.adamKowalskiWithId;
 import static org.nauka.model.tuitionFee.TuitionFeeDaoTest.setStatusNotPaidWhenNoPayments;
 import static org.nauka.model.tuitionFee.TuitionFeeDaoTest.tuitionFeePaid;
@@ -38,24 +37,21 @@ class TuitionFeeServiceTest implements SemesterTest {
     TuitionFeeRepository tuitionFeeRepository;
 
     @Mock
-    StudentRepository studentRepository;
-
+    PaymentRepository paymentRepository;
     @Mock
-    SemesterRepository semesterRepository;
+    StudentService studentService;
+    @Mock
+    SemesterService semesterService;
 
     @Mock
     TuitionFeeMapper tuitionFeeMapper;
-
-    @Mock
-    PaymentRepository paymentRepository;
 
     @InjectMocks
     TuitionFeeService tuitionFeeService;
 
     @AfterEach
     public void clearAll() {
-        studentRepository.clear();
-        semesterRepository.clear();
+        tuitionFeeRepository.clear();
     }
 
     @Test
@@ -65,20 +61,17 @@ class TuitionFeeServiceTest implements SemesterTest {
         Semester semester = semesterSummer;
         BigDecimal amount = new BigDecimal("1000");
 
-        doNothing().when(tuitionFeeRepository).save(any(TuitionFee.class));
-        when(semesterRepository.findIdBySemester(1L)).thenReturn(semester);
-        when(studentRepository.findById(idStudent)).thenReturn(adam);
+        when(studentService.getStudentById(idStudent)).thenReturn(adam);
+        when(tuitionFeeRepository.save(any(TuitionFee.class))).thenReturn(tuitionFeePaid());
+        when(semesterService.getSemesterById(semester.getSemesterId())).thenReturn(semester);
         when(tuitionFeeMapper.toDtoTuitionFeeDto(any())).thenReturn(tuitionFeePaidDto(), tuitionFeePendingDto());
+        when(studentService.getStudentById(idStudent)).thenReturn(adam);
 
-        Map<Long, TuitionFeeDto> result = tuitionFeeService.addTuitionFees(adam.getIdStudent(), semester, amount);
+        TuitionFeeDto result = tuitionFeeService.addTuitionFees(adam.getIdStudent(), semester, amount);
 
-        assertFalse(result.isEmpty());
-        assertTrue(result.containsKey(semester.getSemesterId()));
-
-        TuitionFeeDto dto = result.get(semester.getSemesterId());
-        assertNotNull(dto);
-        assertEquals(amount, dto.getAmount());
-        assertEquals(PaymentStatus.NOT_PAID, dto.getPaymentStatus());
+        assertNotNull(result);
+        assertEquals(amount, result.getAmount());
+        assertEquals(PaymentStatus.NOT_PAID, result.getPaymentStatus());
     }
 
     //Jeśli amount == null powinno rzucić wyjątek
@@ -106,7 +99,7 @@ class TuitionFeeServiceTest implements SemesterTest {
         BigDecimal amount = new BigDecimal(1000);
         TuitionFee tuitionFee = tuitionFeePaid();
 
-        when(tuitionFeeRepository.findById(idTuitionFee)).thenReturn(tuitionFee);
+        when(tuitionFeeRepository.findById(idTuitionFee)).thenReturn(Optional.of(tuitionFee));
         when(paymentRepository.sumPaymentsByTuitionFee(idPayment)).thenReturn(amount);
 
         tuitionFeeService.updateTuitionFeeStatus(idTuitionFee);
@@ -122,7 +115,7 @@ class TuitionFeeServiceTest implements SemesterTest {
         BigDecimal amount = new BigDecimal(1020);
         TuitionFee tuitionFee = tuitionFeePaid();
 
-        when(tuitionFeeRepository.findById(idTuitionFee)).thenReturn(tuitionFee);
+        when(tuitionFeeRepository.findById(idTuitionFee)).thenReturn(Optional.of(tuitionFee));
         when(paymentRepository.sumPaymentsByTuitionFee(idPayment)).thenReturn(amount);
 
         tuitionFeeService.updateTuitionFeeStatus(idTuitionFee);
@@ -137,7 +130,7 @@ class TuitionFeeServiceTest implements SemesterTest {
         BigDecimal amount = BigDecimal.ZERO;
         TuitionFee tuitionFee = setStatusNotPaidWhenNoPayments();
 
-        when(tuitionFeeRepository.findById(idTuitionFee)).thenReturn(tuitionFee);
+        when(tuitionFeeRepository.findById(idTuitionFee)).thenReturn(Optional.of(tuitionFee));
         when(paymentRepository.sumPaymentsByTuitionFee(idPayment)).thenReturn(amount);
 
         tuitionFeeService.updateTuitionFeeStatus(idTuitionFee);
@@ -153,11 +146,32 @@ class TuitionFeeServiceTest implements SemesterTest {
         BigDecimal amount = new BigDecimal(120);
         TuitionFee tuitionFee = tuitionFeePaid();
 
-        when(tuitionFeeRepository.findById(idTuitionFee)).thenReturn(tuitionFee);
+        when(tuitionFeeRepository.findById(idTuitionFee)).thenReturn(Optional.of(tuitionFee));
         when(paymentRepository.sumPaymentsByTuitionFee(idPayment)).thenReturn(amount);
 
         tuitionFeeService.updateTuitionFeeStatus(idTuitionFee);
         assertThat(tuitionFee.getPaymentStatus()).isEqualTo(PaymentStatus.PARTIAL);
         verify(tuitionFeeRepository).save(tuitionFee);
+    }
+
+    @Test
+    void shouldReturnWhenTuitionFeeByIdExists() {
+        Long idTuition = 1L;
+        when(tuitionFeeRepository.findById(idTuition)).thenReturn(Optional.of(tuitionFeePaid()));
+
+        TuitionFee tuitionFeeById = tuitionFeeService.getTuitionFeeById(idTuition);
+
+        assertEquals(idTuition, tuitionFeeById.getTuitionFeeId());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenStudentByIdNotFound() {
+        Long idTuition = 1115L;
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> tuitionFeeService.getTuitionFeeById(idTuition));
+
+        assertTrue(exception.getMessage().contains("TuitionFee with id: " + idTuition + " not found"));
+        verify(tuitionFeeRepository).findById(idTuition);
     }
 }
