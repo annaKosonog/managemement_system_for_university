@@ -18,6 +18,9 @@ public class StudentService {
 
     public StudentDto addNewStudent(StudentDto studentDto) {
         Student saveStudent = studentMapper.toStudentDao(studentDto);
+        if (studentRepository.existsByIndexNumber(saveStudent.getIndexNumber())) {
+            throw new IllegalArgumentException("Student with this index number already exists");
+        }
         studentRepository.save(saveStudent);
         return studentMapper.toStudentDto(saveStudent);
     }

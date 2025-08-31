@@ -7,12 +7,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
 public class StudentRepositoryImpl implements StudentRepository {
+    @Override
+    public boolean existsByIndexNumber(Long indexId) {
+        if (existsByIndexNumber(indexId)) {
+            throw new IllegalArgumentException("Student o tym numerze indeksu już istnieje");
+        }
+        return false;
+    }
+
     @Override
     public void clear() {
 

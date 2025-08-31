@@ -4,16 +4,20 @@ import org.nauka.model.dao.Student;
 
 import java.util.List;
 
-import static org.nauka.model.SemesterTest.semesterSummer;
-import static org.nauka.model.SemesterTest.semesterWinter;
+import static org.nauka.model.semesterDirection.SemesterDirectionDaoTest.administration;
+import static org.nauka.model.semesterDirection.SemesterDirectionDaoTest.computerScience;
 
 public class StudentDaoTestData {
 
     public static Student adamKowalskiWithId() {
-        return new Student(1L, "Adam", 112233L, "112233@student.wwe.pl", List.of(semesterSummer, semesterWinter));
+        return new Student(1L, "Adam", 112233L, "112233@student.wwe.pl", List.of(), List.of(computerScience()));
+    }
+
+    public static Student adamKowalskiWithoutPaymentList() {
+        return new Student(1L, "Adam", 112233L, "112233@student.wwe.pl", List.of(), List.of(computerScience()));
     }
 
     public static Student alaKotWithId() {
-        return new Student(2L, "Ala", 114477L, "114477@student.wwe.pl", List.of(semesterWinter));
+        return new Student(2L, "Ala", 114477L, "114477@student.wwe.pl", List.of(), List.of(administration()));
     }
 }

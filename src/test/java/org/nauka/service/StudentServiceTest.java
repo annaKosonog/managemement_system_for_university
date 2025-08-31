@@ -1,5 +1,6 @@
 package org.nauka.service;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -8,13 +9,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.nauka.mapper.StudentMapper;
 import org.nauka.model.dao.Student;
 import org.nauka.model.dto.StudentDto;
-import org.nauka.model.student.StudentDaoTestData;
-import org.nauka.model.student.StudentDtoTestData;
 import org.nauka.repository.StudentRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.nauka.model.SemesterTest.semesterWinter;
+import static org.nauka.model.semesterDirection.SemesterDirectionDaoTest.computerScience;
+import static org.nauka.model.student.StudentDaoTestData.adamKowalskiWithoutPaymentList;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
@@ -28,82 +33,64 @@ class StudentServiceTest {
     @InjectMocks
     StudentService studentService;
 
+    @AfterEach
+    void tearDown() {
+        studentRepository.clear();
+    }
+
     @Test
     void shouldAddNewStudent() {
-        Long id = 1L;
-        StudentDto adamDto = StudentDtoTestData.adamKowalskiDto();
-        Student adamedKowalskiWithId = StudentDaoTestData.adamKowalskiWithId();
+        StudentDto adam = StudentDto.of("Adam", 112233L, "112233@student.wwe.pl", List.of(semesterWinter), List.of(computerScience()));
 
-        when(studentRepository.generateId()).thenReturn(id);
-        when(studentMapper.toStudentDao(adamDto, id)).thenReturn(adamedKowalskiWithId);
-        when(studentMapper.toStudentDto(adamedKowalskiWithId)).thenReturn(adamDto);
+        when(studentMapper.toStudentDao(adam))
+                .thenReturn(adamKowalskiWithoutPaymentList());
+        when(studentRepository.existsByIndexNumber(112233L)).thenReturn(false);
+        when(studentRepository.save(adamKowalskiWithoutPaymentList()))
+                .thenReturn(adamKowalskiWithoutPaymentList());
+        when(studentMapper.toStudentDto(any(Student.class))).thenReturn(adam);
 
-        StudentDto result = studentService.addNewStudent(adamDto);
+        StudentDto result = studentService.addNewStudent(adam);
 
         //werfikacje
-        verify(studentRepository).generateId();
-
         verify(studentRepository).save(any());
 
         //assercje
-        assertEquals(adamDto.getName(), result.getName());
-
+        assertEquals(adam.getName(), result.getName());
         assertEquals("Adam", result.getName());
     }
 
     @Test
     void notShouldAddNewStudent() {
-        Long id = 1L;
-        StudentDto dto = StudentDtoTestData.adamKowalskiDto();
-        Student entity = StudentDaoTestData.adamKowalskiWithId();
+        StudentDto adam = StudentDto.of("Adam", 112233L, "112233@student.wwe.pl", List.of(semesterWinter), List.of(computerScience()));
 
-        // mocki
-        when(studentRepository.generateId()).thenReturn(id);
-        when(studentMapper.toStudentDao(dto, id)).thenReturn(entity);
-        when(studentRepository.save(entity)).thenReturn(false);
+        when(studentMapper.toStudentDao(adam))
+                .thenReturn(adamKowalskiWithoutPaymentList());
+        when(studentRepository.existsByIndexNumber(112233L)).thenReturn(true);
 
-        StudentDto result = studentService.addNewStudent(dto);
+        assertThrows(IllegalArgumentException.class,
+                () -> studentService.addNewStudent(adam));
 
-        // weryfikacje
-        verify(studentRepository).generateId();
-        verify(studentRepository).save(entity);
-
-        // asercje – zakładamy, że zwracany jest null
-        assertEquals(null, result);
+        verify(studentRepository, never()).save(any(Student.class));
     }
 
     @Test
-    void shouldReturnStudentDtoWhenStudentExists() {
-        Long id = 1L;
-        StudentDto dto = StudentDtoTestData.adamKowalskiDto();
-        Student entity = StudentDaoTestData.adamKowalskiWithId();
+    void shouldReturnWhenStudentByIdExists() {
+        Long idStudent = 1L;
+        when(studentRepository.findById(idStudent)).thenReturn(Optional.of(adamKowalskiWithoutPaymentList()));
 
-        when(studentRepository.findById(id)).thenReturn(entity);
-        when(studentMapper.toStudentDto(entity)).thenReturn(dto);
+        Student studentById = studentService.getStudentById(1L);
 
-        StudentDto result = studentService.getStudentById(id);
-
-        assertNotNull(result);
-        assertEquals(id, entity.getIdStudent());
-        assertEquals("Adam", result.getName());
-
-        verify(studentRepository).findById(id);
-        verify(studentMapper).toStudentDto(entity);
+        assertEquals(idStudent, studentById.getIdStudent());
     }
 
     @Test
-    void shouldThrowExceptionWhenStudentDoesNotExist() {
-        Long id = 1L;
+    void shouldThrowExceptionWhenStudentByIdNotFound() {
+        Long idStudent = 1115L;
 
-        when(studentRepository.findById(id)).thenReturn(null);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> studentService.getStudentById(idStudent));
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> studentService.getStudentById(id)
-        );
-
-        assertTrue(exception.getMessage().contains("Not found student by id: " + id));
-        verify(studentRepository).findById(id);
-        verify(studentMapper, never()).toStudentDto(any());
+        assertTrue(exception.getMessage().contains("Student with id " + idStudent + " not found"));
+        verify(studentRepository).findById(idStudent);
     }
 }
