@@ -20,4 +20,14 @@ public class PaymentDto {
 
     private TuitionFeeDto tuitionFeeDto;
 
+
+    public static PaymentDto of(StudentDto studentDto, LocalDate paymentDate, BigDecimal amount, TuitionFeeDto tuitionFeeDto) {
+        PaymentDto paymentDto = new PaymentDto();
+        paymentDto.studentDto = studentDto;
+        paymentDto.paymentDate = paymentDate;
+        paymentDto.amount = amount;
+        paymentDto.tuitionFeeDto = tuitionFeeDto;
+        return paymentDto;
+
+    }
 }

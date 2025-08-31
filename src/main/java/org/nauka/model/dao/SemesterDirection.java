@@ -1,10 +1,7 @@
 package org.nauka.model.dao;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
@@ -24,6 +21,7 @@ public class SemesterDirection {
     @OneToMany(mappedBy = "semesterDirection")
     private List<Semester> degree;
 
+    @Setter
     @OneToMany
     private List<TuitionFee> tuitionFee;
 }

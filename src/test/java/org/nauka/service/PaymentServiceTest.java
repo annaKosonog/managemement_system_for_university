@@ -11,8 +11,6 @@ import org.nauka.model.dao.Payment;
 import org.nauka.model.dao.TuitionFee;
 import org.nauka.model.dto.PaymentDto;
 import org.nauka.repository.PaymentRepository;
-import org.nauka.repository.StudentRepository;
-import org.nauka.repository.TuitionFeeRepository;
 
 import java.math.BigDecimal;
 import java.time.Clock;
@@ -37,10 +35,7 @@ public class PaymentServiceTest {
     PaymentMapper paymentMapper;
 
     @Mock
-    StudentRepository studentRepository;
-
-    @Mock
-    TuitionFeeRepository tuitionFeeRepository;
+    StudentService studentService;
 
     @Mock
     FinanceService financeService;
@@ -54,22 +49,19 @@ public class PaymentServiceTest {
     @InjectMocks
     PaymentService paymentService;
 
-
     @Test
     void shouldReturnCorrectRegisterPayment() {
         Long feeId = 1L;
         Long studentId = 1L;
-        Long paymentId = 1L;
         BigDecimal amountPaid = BigDecimal.valueOf(1000);
 
         TuitionFee tuitionFee = tuitionFeePaid();
         PaymentDto expectedDto = paidOnTimeDto();
 
-        when(tuitionFeeRepository.findById(feeId)).thenReturn(tuitionFee);
-        when(studentRepository.findById(studentId)).thenReturn(adamKowalskiWithId());
+        when(tuitionFeeService.getTuitionFeeById(feeId)).thenReturn(tuitionFee);
+        when(studentService.getStudentById(studentId)).thenReturn(adamKowalskiWithId());
         when(financeService.calculateTotalAmount(any(Payment.class)))
                 .thenReturn(BigDecimal.valueOf(120));
-        when(paymentRepository.generateId()).thenReturn(paymentId);
         when(clock.instant()).thenReturn(Instant.parse("2025-02-25T10:00:00Z"));
         when(clock.getZone()).thenReturn(ZoneId.systemDefault());
         when(paymentMapper.toPaymentDto(any(Payment.class))).thenReturn(expectedDto);
@@ -77,7 +69,7 @@ public class PaymentServiceTest {
         PaymentDto result = paymentService.registerPayment(studentId, feeId, amountPaid);
 
         assertThat(result).isEqualTo(expectedDto);
-        verify(paymentRepository).savePayment(any(Payment.class));
+        verify(paymentRepository).save(any(Payment.class));
         verify(tuitionFeeService).updateTuitionFeeStatus(tuitionFee.getTuitionFeeId());
     }
 
@@ -85,18 +77,16 @@ public class PaymentServiceTest {
     void shouldCreatePaymentWithCorrectFields() {
         Long feeId = 1L;
         Long studentId = 1L;
-        Long paymentId = 1L;
         BigDecimal amountPaid = BigDecimal.valueOf(1000);
 
         TuitionFee tuitionFee = tuitionFeePaid();
         PaymentDto expectedDto = paidOnTimeDto();
 
-        when(tuitionFeeRepository.findById(feeId)).thenReturn(tuitionFee);
-        when(studentRepository.findById(studentId)).thenReturn(adamKowalskiWithId());
+        when(tuitionFeeService.getTuitionFeeById(feeId)).thenReturn(tuitionFee);
+        when(studentService.getStudentById(studentId)).thenReturn(adamKowalskiWithId());
         when(financeService.calculateTotalAmount(any(Payment.class)))
                 .thenReturn(BigDecimal.valueOf(1000));
 
-        when(paymentRepository.generateId()).thenReturn(paymentId);
         when(clock.instant()).thenReturn(Instant.parse("2025-02-25T10:00:00Z"));
         when(clock.getZone()).thenReturn(ZoneId.systemDefault());
         when(paymentMapper.toPaymentDto(any(Payment.class))).thenReturn(expectedDto);
