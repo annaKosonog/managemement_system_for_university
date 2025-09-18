@@ -1,6 +1,8 @@
 package org.nauka.service;
 
 import lombok.RequiredArgsConstructor;
+import org.nauka.exception.student.StudentAlreadyExistsException;
+import org.nauka.exception.student.StudentNotFoundException;
 import org.nauka.mapper.StudentMapper;
 import org.nauka.model.dao.Student;
 import org.nauka.model.dto.StudentDto;
@@ -19,7 +21,7 @@ public class StudentService {
     public StudentDto addNewStudent(StudentDto studentDto) {
         Student saveStudent = studentMapper.toStudentDao(studentDto);
         if (studentRepository.existsByIndexNumber(saveStudent.getIndexNumber())) {
-            throw new IllegalArgumentException("Student with this index number already exists");
+            throw new StudentAlreadyExistsException(studentDto.getIndexNumber());
         }
         studentRepository.save(saveStudent);
         return studentMapper.toStudentDto(saveStudent);
@@ -27,6 +29,6 @@ public class StudentService {
 
     public Student getStudentById(Long id) {
         return studentRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Student with id " + id + " not found"));
+                .orElseThrow(() -> new StudentNotFoundException(id));
     }
 }
