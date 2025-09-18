@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.nauka.exception.tuitionFee.TuitionFeeNotFoundException;
 import org.nauka.mapper.TuitionFeeMapper;
 import org.nauka.model.SemesterTest;
 import org.nauka.model.dao.PaymentStatus;
@@ -168,7 +169,7 @@ class TuitionFeeServiceTest implements SemesterTest {
     void shouldThrowExceptionWhenStudentByIdNotFound() {
         Long idTuition = 1115L;
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+        TuitionFeeNotFoundException exception = assertThrows(TuitionFeeNotFoundException.class,
                 () -> tuitionFeeService.getTuitionFeeById(idTuition));
 
         assertTrue(exception.getMessage().contains("TuitionFee with id: " + idTuition + " not found"));

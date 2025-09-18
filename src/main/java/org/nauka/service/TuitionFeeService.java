@@ -1,6 +1,7 @@
 package org.nauka.service;
 
 import lombok.RequiredArgsConstructor;
+import org.nauka.exception.tuitionFee.TuitionFeeNotFoundException;
 import org.nauka.mapper.TuitionFeeMapper;
 import org.nauka.model.dao.PaymentStatus;
 import org.nauka.model.dao.Semester;
@@ -59,6 +60,6 @@ public class TuitionFeeService {
 
     public TuitionFee getTuitionFeeById(Long id) {
         return tuitionFeeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("TuitionFee with id: " + id + " not found"));
+                .orElseThrow(() -> new TuitionFeeNotFoundException(id));
     }
 }
