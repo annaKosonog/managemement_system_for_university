@@ -1,6 +1,7 @@
 package org.nauka.service;
 
 import lombok.RequiredArgsConstructor;
+import org.nauka.exception.semester.SemesterNotFoundException;
 import org.nauka.model.dao.Semester;
 import org.nauka.repository.SemesterRepository;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class SemesterService {
     public Semester getSemesterById(Long id) {
         Semester bySemester = semesterRepository.findIdBySemester(id);
         if (bySemester == null) {
-            throw new IllegalArgumentException("Not found semester by id: " + id);
+            throw new SemesterNotFoundException(id);
         }
         return bySemester;
     }

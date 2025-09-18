@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.nauka.exception.semester.SemesterNotFoundException;
 import org.nauka.model.SemesterTest;
 import org.nauka.model.dao.Semester;
 import org.nauka.repository.SemesterRepository;
@@ -39,8 +40,8 @@ public class SemesterServiceTest {
         Long id = 99L;
         when(semesterRepository.findIdBySemester(id)).thenReturn(null);
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        SemesterNotFoundException exception = assertThrows(
+                SemesterNotFoundException.class,
                 () -> semesterService.getSemesterById(id)
         );
         assertTrue(exception.getMessage().contains("Not found semester by id: " + id));
