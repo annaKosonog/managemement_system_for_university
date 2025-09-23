@@ -130,5 +130,15 @@ class StudentServiceTest {
         verify(studentRepository).deleteById(id);
     }
 
+    @Test
+    void shouldThrowExceptionWhenRepositoryNotFoundIdWithId() {
+        Long id = 9999L;
 
+        doThrow(new AppException("Student", id, ErrorType.NOT_FOUND)).when(studentRepository).deleteById(id);
+
+        assertThrows(AppException.class,
+                () -> studentService.deleteStudentById(id));
+
+        verify(studentRepository).deleteById(id);
+    }
 }
