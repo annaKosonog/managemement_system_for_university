@@ -10,15 +10,11 @@ import static org.nauka.model.semesterDirection.SemesterDirectionDaoTest.compute
 
 public class StudentDtoTestData {
     public static StudentDto adamKowalskiDto() {
-        return new StudentDto("Adam", 112233L, "112233@student.wwe.pl", List.of(semesterWinter), List.of(), List.of(computerScience()));
-    }
-
-    public static StudentDto adamKowalskiWithoutDto() {
-        return StudentDto.of("Adam", 112233L, "112233@student.wwe.pl", List.of(semesterWinter), List.of(computerScience()));
+        return new StudentDto("Adam", 112233L, "112233@student.wwe.pl", List.of(), List.of(computerScience()));
     }
 
     public static StudentDto alaKotDto() {
-        return new StudentDto("Ala", 114477L, "114477@student.wwe.pl", List.of(semesterWinter), List.of(), List.of(administration()));
+        return new StudentDto("Ala", 114477L, "114477@student.wwe.pl", List.of(), List.of(administration()));
     }
 }
         //notPaidWithinFourteenDaysButWithoutInterestDto()/*),

@@ -11,20 +11,21 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @Getter
+@Setter
 public class StudentDto {
     private String name;
     private Long indexNumber;
-    private String e_mail;
-    private List<Semester> semesters;
+    private String email;
+ //   private List<Semester> semesters;
     private List<PaymentDto> paymentsList;
     private List<SemesterDirection> semesterDirectionList;
 
-    public static StudentDto of(String name, Long indexNumber, String e_mail, List<Semester> semesters, List<SemesterDirection> semesterDirections) {
+    public static StudentDto of(String name, Long indexNumber, String e_mail, List<SemesterDirection> semesterDirections) {
         StudentDto studentDto = new StudentDto();
         studentDto.name = name;
         studentDto.indexNumber = indexNumber;
-        studentDto.e_mail = e_mail;
-        studentDto.semesters = semesters;
+        studentDto.email = e_mail;
+     //   studentDto.semesters = semesters;
         studentDto.paymentsList = null;
         studentDto.semesterDirectionList = semesterDirections;
         return studentDto;
