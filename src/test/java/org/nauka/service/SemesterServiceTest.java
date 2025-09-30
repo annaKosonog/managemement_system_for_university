@@ -19,6 +19,10 @@ public class SemesterServiceTest {
     @Mock
     SemesterRepository semesterRepository;
 
+    @Mock
+    TuitionFeeService tuitionFeeService;
+
+
     @InjectMocks
     SemesterService semesterService;
 

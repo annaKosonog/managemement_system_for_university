@@ -1,14 +1,17 @@
 package org.nauka.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @EqualsAndHashCode
 @ToString
@@ -18,7 +21,9 @@ public class Semester {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long semesterId;
     private String name;
+    @JsonFormat(pattern = "yyyy-M-d")
     private LocalDate startDate;
+    @JsonFormat(pattern = "yyyy-M-d")
     private LocalDate endDate;
     @OneToMany
     private List<Student> student;
@@ -29,10 +34,21 @@ public class Semester {
     @OneToMany
     private List<TuitionFee> tuitionFee;
 
-    public Semester(Long semesterId, String name, LocalDate startDate, LocalDate endDate) {
-        this.semesterId = semesterId;
+    public Semester(String name, LocalDate startDate, LocalDate endDate) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+
+    public static Semester of(String name, LocalDate startDate, LocalDate endDate, List<Student> student, SemesterDirection semesterDirection, TuitionFee tuitionFee) {
+        Semester newSemester = new Semester();
+        newSemester.name = name;
+        newSemester.startDate = startDate;
+        newSemester.endDate = endDate;
+        newSemester.student = student;
+        newSemester.semesterDirection = semesterDirection;
+        newSemester.tuitionFee = List.of(tuitionFee);
+        return newSemester;
     }
 }

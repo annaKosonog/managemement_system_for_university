@@ -10,6 +10,6 @@ public interface SemesterTest {
     LocalDate startSemesterWinter = LocalDate.of(2024, 10, 1);
     LocalDate endSemesterWinter = LocalDate.of(2025, 2, 28);
 
-    Semester semesterSummer = new Semester(1L, "letni", startSemestersSummer, endSemestersSummer);
-    Semester semesterWinter = new Semester(2L, "zimowy", startSemesterWinter, endSemesterWinter);
+    Semester semesterSummer = new Semester("letni", startSemestersSummer, endSemestersSummer);
+    Semester semesterWinter = new Semester("zimowy", startSemesterWinter, endSemesterWinter);
 }
