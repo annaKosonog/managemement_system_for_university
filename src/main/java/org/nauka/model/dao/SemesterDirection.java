@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Getter
 public class SemesterDirection {
 
     @Id
@@ -19,9 +20,14 @@ public class SemesterDirection {
     private String direction;
 
     @OneToMany(mappedBy = "semesterDirection")
-    private List<Semester> degree;
+    private List<Semester> semester;
 
     @Setter
     @OneToMany
     private List<TuitionFee> tuitionFee;
+
+
+    public SemesterDirection(String direction) {
+        this.direction = direction;
+    }
 }
