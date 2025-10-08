@@ -5,11 +5,21 @@ import org.mapstruct.Mapping;
 import org.nauka.model.dao.Payment;
 import org.nauka.model.dto.PaymentDto;
 
-@Mapper(componentModel = "spring")
+import java.util.List;
+
+@Mapper(componentModel = "spring", uses = {StudentMapper.class, TuitionFeeMapper.class})
 public interface PaymentMapper {
 
     @Mapping(target = "paymentId", ignore = true)
-    Payment toPaymentDao(PaymentDto paymentDto);
+    @Mapping(source = "studentDto", target = "student")
+    @Mapping(source = "tuitionFeeDto", target = "tuitionFee")
+    Payment toEntity(PaymentDto paymentDto);
 
-    PaymentDto toPaymentDto(Payment payment);
+    @Mapping(source = "student", target = "studentDto")
+    @Mapping(source = "tuitionFee", target = "tuitionFeeDto")
+    PaymentDto toDto(Payment payment);
+
+    List<PaymentDto> toDtoList(List<Payment> entities);
+
+    List<Payment> toEntityList(List<PaymentDto> dtos);
 }

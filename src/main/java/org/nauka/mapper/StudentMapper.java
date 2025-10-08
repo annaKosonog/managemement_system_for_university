@@ -5,11 +5,18 @@ import org.mapstruct.Mapping;
 import org.nauka.model.dao.Student;
 import org.nauka.model.dto.StudentDto;
 
-@Mapper(componentModel = "spring")
+import java.util.List;
+
+@Mapper(componentModel = "spring", uses = {PaymentMapper.class, SemesterDirectionMapper.class})
 public interface StudentMapper {
 
+    @Mapping(source = "paymentsList", target = "paymentList")
     @Mapping(target = "idStudent", ignore = true)
-    Student toStudentDao(StudentDto studentDto);
+    Student toEntity(StudentDto studentDto);
 
-    StudentDto toStudentDto(Student student);
+    @Mapping(source = "paymentList", target = "paymentsList")
+    StudentDto toDto(Student student);
+
+    List<StudentDto> toDtoList(List<Student> entities);
+    List<Student> toEntityList(List<StudentDto> dtos);
 }

@@ -1,8 +1,10 @@
 package org.nauka.model;
 
 import org.nauka.model.dao.Semester;
+import org.nauka.model.dto.SemesterDto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface SemesterTest {
     LocalDate startSemestersSummer = LocalDate.of(2025, 3, 1);
@@ -12,4 +14,6 @@ public interface SemesterTest {
 
     Semester semesterSummer = new Semester("letni", startSemestersSummer, endSemestersSummer);
     Semester semesterWinter = new Semester("zimowy", startSemesterWinter, endSemesterWinter);
+
+    SemesterDto semesterSummerDto = new SemesterDto(1L, "letni", startSemestersSummer, endSemestersSummer, List.of());
 }
