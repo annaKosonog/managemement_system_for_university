@@ -22,6 +22,4 @@ public class SemesterDirectionController {
         SemesterDirection direction = semesterDirectionService.createNewSemesterDirection(name);
         return ResponseEntity.ok(direction);
     }
-
-
 }

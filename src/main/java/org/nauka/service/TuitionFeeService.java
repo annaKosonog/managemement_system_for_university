@@ -3,12 +3,14 @@ package org.nauka.service;
 import lombok.RequiredArgsConstructor;
 import org.nauka.exception.handler.service.AppException;
 import org.nauka.exception.handler.service.ErrorType;
+import org.nauka.mapper.StudentMapper;
 import org.nauka.mapper.TuitionFeeMapper;
 import org.nauka.model.dao.PaymentStatus;
-import org.nauka.model.dao.Semester;
 import org.nauka.model.dao.TuitionFee;
+import org.nauka.model.dto.StudentDto;
 import org.nauka.model.dto.TuitionFeeDto;
 import org.nauka.repository.PaymentRepository;
+import org.nauka.repository.SemesterRepository;
 import org.nauka.repository.TuitionFeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,20 +22,23 @@ public class TuitionFeeService {
     private final TuitionFeeRepository tuitionFeeRepository;
     private final PaymentRepository paymentRepository;
     private final StudentService studentService;
-    private final SemesterService semesterService;
+    private final SemesterRepository semesterRepository;
     private final TuitionFeeMapper tuitionFeeMapper;
+    private final StudentMapper studentMapper;
 
-    public TuitionFeeDto addTuitionFees(Long idStudent, Semester idSemester, BigDecimal amount) {
+    public TuitionFeeDto addTuitionFees(Long indexNumber, Long idSemester, BigDecimal amount) {
         validateAmount(amount);
+        StudentDto dto = studentService.getStudentByIndexNumber(indexNumber);
+
 
         TuitionFee entity = TuitionFee.of(
-                studentService.getStudentById(idStudent),
-                semesterService.getSemesterById(idSemester.getSemesterId()),
+                studentMapper.toEntity(dto),
+                semesterRepository.findSemesterBySemesterId(idSemester),
                 amount,
                 PaymentStatus.NOT_PAID
         );
         tuitionFeeRepository.save(entity);
-        return tuitionFeeMapper.toDtoTuitionFeeDto(entity);
+        return tuitionFeeMapper.toDto(entity);
     }
 
     private void validateAmount(BigDecimal amount) {

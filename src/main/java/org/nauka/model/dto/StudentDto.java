@@ -1,8 +1,6 @@
 package org.nauka.model.dto;
 
 import lombok.*;
-import org.nauka.model.dao.Semester;
-import org.nauka.model.dao.SemesterDirection;
 
 import java.util.List;
 
@@ -16,18 +14,17 @@ public class StudentDto {
     private String name;
     private Long indexNumber;
     private String email;
- //   private List<Semester> semesters;
-    private List<PaymentDto> paymentsList;
-    private List<SemesterDirection> semesterDirectionList;
+    private List<Long> paymentIds;
+    private List<Long> semesterDirectionIds;
 
-    public static StudentDto of(String name, Long indexNumber, String e_mail, List<SemesterDirection> semesterDirections) {
+    public static StudentDto of(String name, java.lang.Long indexNumber, String e_mail, List<Long> semesterDirections) {
         StudentDto studentDto = new StudentDto();
         studentDto.name = name;
         studentDto.indexNumber = indexNumber;
         studentDto.email = e_mail;
      //   studentDto.semesters = semesters;
-        studentDto.paymentsList = null;
-        studentDto.semesterDirectionList = semesterDirections;
+        studentDto.paymentIds = null;
+        studentDto.semesterDirectionIds = semesterDirections;
         return studentDto;
     }
 }

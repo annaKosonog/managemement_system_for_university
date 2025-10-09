@@ -3,7 +3,6 @@ package org.nauka.controller;
 import lombok.RequiredArgsConstructor;
 import org.nauka.model.dto.TuitionFeeDto;
 import org.nauka.service.TuitionFeeService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +15,12 @@ public class TuitionFeeController {
 
 
     @PostMapping()
-    public ResponseEntity<TuitionFeeDto> addTuitionFees(@RequestBody TuitionFeeDto tuitionFeeDto, Long id) {
+    public ResponseEntity<TuitionFeeDto> addTuitionFees(@RequestBody TuitionFeeDto tuitionFeeDto) {
         TuitionFeeDto addTuitionFeeRequest = tuitionFeeService.addTuitionFees(
-                id,
-                tuitionFeeDto.getSemester(),
+                tuitionFeeDto.getStudentId(),
+                tuitionFeeDto.getSemesterId(),
                 tuitionFeeDto.getAmount());
-        return ResponseEntity.status(HttpStatus.CREATED).body(addTuitionFeeRequest);
+        return ResponseEntity.ok(addTuitionFeeRequest);
     }
 
     @GetMapping("/{id}")

@@ -11,6 +11,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @Getter
+@Setter
 public class SemesterDirection {
 
     @Id
@@ -21,6 +22,10 @@ public class SemesterDirection {
 
     @OneToMany(mappedBy = "semesterDirection")
     private List<Semester> semester;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
 
     @Setter
     @OneToMany

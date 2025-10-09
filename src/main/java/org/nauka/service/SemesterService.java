@@ -3,30 +3,35 @@ package org.nauka.service;
 import lombok.RequiredArgsConstructor;
 import org.nauka.exception.handler.service.AppException;
 import org.nauka.exception.handler.service.ErrorType;
-import org.nauka.mapper.StudentMapper;
+import org.nauka.mapper.SemesterMapper;
 import org.nauka.model.dao.Semester;
+import org.nauka.model.dao.Student;
+import org.nauka.model.dto.SemesterDto;
 import org.nauka.repository.SemesterRepository;
+import org.nauka.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
 public class SemesterService {
     private final SemesterRepository semesterRepository;
     private final TuitionFeeService tuitionFeeService;
-    private final StudentService studentService;
-    private final StudentMapper studentMapper;
+    private final SemesterMapper semesterMapper;
+    private final StudentRepository studentRepository;
 
 
     @Transactional
-    public Semester createNewSemester(Semester semester) {
+    public SemesterDto createNewSemester(Semester semester) {
         Semester newSemester = new Semester(
                 semester.getName(),
                 semester.getStartDate(),
                 semester.getEndDate()
         );
         semesterRepository.save(newSemester);
-        return newSemester;
+        return semesterMapper.toSemesterDto(newSemester);
     }
 
     public Semester getSemesterById(Long id) {
@@ -37,22 +42,32 @@ public class SemesterService {
         return bySemester;
     }
 
-   /* public Semester addStudentToSemester(Long idSemester) {
-        List<Student> students = studentService.getStudents()
-                .stream()
-                .map(studentMapper::toStudentDao)
-                .filter(student -> hasSemester(student, idSemester))
-                .collect(Collectors.toList());
+    public SemesterDto addStudentToSemester(Long idSemester, Long indexNumber) {
+        Semester semester = getSemesterById(idSemester);
+
+        Student student = studentRepository.findByIndexNumber(indexNumber).orElseThrow();
+
+        if (hasSemester(student, idSemester)) {
+            throw new AppException("Semester", idSemester, ErrorType.ALREADY_EXISTS);
+        }
+
+        if (semester.getStudent() == null) {
+            semester.setStudent(new ArrayList<>());
+        }
+        studentRepository.save(student);
+        semester.getStudent().add(student);
+        semesterRepository.save(semester);
+        return semesterMapper.toSemesterDto(semester);
     }
 
     private boolean hasSemester(Student student, Long idSemester) {
-        if (student.getSemesters() == null) return false;
-        return student.getSemesters().stream()
-                .anyMatch(s -> s.getId().equals(idSemester));
-    }*/
+        if (student.getSemesterDirections() == null) {
+            return false;
+        }
 
-   /* public SemesterDirection addNewSemesterDirectionToSemester(Long idSemesterDirection){
-
-    }*/
-
+        return student.getSemesterDirections().stream()
+                .filter(dir -> dir.getSemester() != null)
+                .flatMap(dir -> dir.getSemester().stream())
+                .anyMatch(s -> s.getSemesterId().equals(idSemester));
+    }
 }

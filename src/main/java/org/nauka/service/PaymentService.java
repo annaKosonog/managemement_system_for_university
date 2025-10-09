@@ -30,7 +30,7 @@ public class PaymentService {
 
         paymentRepository.save(payment);
         tuitionFeeService.updateTuitionFeeStatus(idTuitionFee);
-        return paymentMapper.toPaymentDto(payment);
+        return paymentMapper.toDto(payment);
     }
 
     private Payment createPayment(Long idStudent, Long idTuitionFee, BigDecimal amount) {

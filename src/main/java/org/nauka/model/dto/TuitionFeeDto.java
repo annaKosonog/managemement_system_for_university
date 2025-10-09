@@ -2,8 +2,6 @@ package org.nauka.model.dto;
 
 import lombok.*;
 import org.nauka.model.dao.PaymentStatus;
-import org.nauka.model.dao.Semester;
-import org.nauka.model.dao.SemesterDirection;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,11 +14,10 @@ import java.time.LocalDate;
 @Setter
 public class TuitionFeeDto {
 
-    private StudentDto studentDto;
-
-    private Semester semester;
-
-    private SemesterDirection semesterDirection;
+    private Long tuitionFeeId;
+    private Long studentId;
+    private Long semesterId;
+    private Long semesterDirectionId;
 
     private BigDecimal amount;
 

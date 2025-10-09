@@ -7,18 +7,21 @@ import org.nauka.model.dto.PaymentDto;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {StudentMapper.class, TuitionFeeMapper.class})
+@Mapper(componentModel = "spring", uses = {EntityIdMapper.class})
 public interface PaymentMapper {
 
     @Mapping(target = "paymentId", ignore = true)
-    @Mapping(source = "studentDto", target = "student")
-    @Mapping(source = "tuitionFeeDto", target = "tuitionFee")
+    @Mapping(source = "studentId", target = "student")
+    @Mapping(source = "tuitionFeeId", target = "tuitionFee")
     Payment toEntity(PaymentDto paymentDto);
 
-    @Mapping(source = "student", target = "studentDto")
-    @Mapping(source = "tuitionFee", target = "tuitionFeeDto")
+
+    @Mapping(source = "student", target = "studentId")
+    @Mapping(source = "tuitionFee", target = "tuitionFeeId")
     PaymentDto toDto(Payment payment);
 
+    @Mapping(source = "student", target = "studentId")
+    @Mapping(source = "tuitionFee", target = "tuitionFeeId")
     List<PaymentDto> toDtoList(List<Payment> entities);
 
     List<Payment> toEntityList(List<PaymentDto> dtos);

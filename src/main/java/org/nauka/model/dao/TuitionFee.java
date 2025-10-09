@@ -1,5 +1,6 @@
 package org.nauka.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,7 +31,6 @@ public class TuitionFee {
     private BigDecimal amount;
 
     private LocalDate paymentDueDate; //termin płatności
-
 
     @Enumerated(EnumType.STRING)
     @Setter

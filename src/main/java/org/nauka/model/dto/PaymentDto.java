@@ -8,25 +8,26 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 @ToString
 public class PaymentDto {
 
-    private StudentDto studentDto;
+    private Long studentId;
 
     private LocalDate paymentDate;
 
     private BigDecimal amount;
 
-    private TuitionFeeDto tuitionFeeDto;
+    private Long tuitionFeeId;
 
 
-    public static PaymentDto of(StudentDto studentDto, LocalDate paymentDate, BigDecimal amount, TuitionFeeDto tuitionFeeDto) {
+    public static PaymentDto of(Long studentId, LocalDate paymentDate, BigDecimal amount, Long tuitionFeeId) {
         PaymentDto paymentDto = new PaymentDto();
-        paymentDto.studentDto = studentDto;
+        paymentDto.studentId = studentId;
         paymentDto.paymentDate = paymentDate;
         paymentDto.amount = amount;
-        paymentDto.tuitionFeeDto = tuitionFeeDto;
+        paymentDto.tuitionFeeId = tuitionFeeId;
         return paymentDto;
 
     }

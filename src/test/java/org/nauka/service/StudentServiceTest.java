@@ -20,7 +20,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.nauka.model.semesterDirection.SemesterDirectionDaoTest.computerScience;
 import static org.nauka.model.student.StudentDaoTestData.adamKowalskiWithId;
 import static org.nauka.model.student.StudentDaoTestData.adamKowalskiWithoutPaymentList;
 import static org.nauka.model.student.StudentDtoTestData.adamKowalskiDto;
@@ -34,6 +33,9 @@ class StudentServiceTest {
     @Mock
     StudentMapper studentMapper;
 
+    @Mock
+    SemesterDirectionService semesterDirectionService;
+
     @InjectMocks
     StudentService studentService;
 
@@ -44,14 +46,14 @@ class StudentServiceTest {
 
     @Test
     void shouldAddNewStudent() {
-        StudentDto adam = StudentDto.of("Adam", 112233L, "112233@student.wwe.pl", List.of(computerScience()));
+        StudentDto adam = StudentDto.of("Adam", 112233L, "112233@student.wwe.pl", List.of(2L));
 
-        when(studentMapper.toStudentDao(adam))
+        when(studentMapper.toEntity(adam))
                 .thenReturn(adamKowalskiWithoutPaymentList());
         when(studentRepository.existsByIndexNumber(112233L)).thenReturn(false);
         when(studentRepository.save(adamKowalskiWithoutPaymentList()))
                 .thenReturn(adamKowalskiWithoutPaymentList());
-        when(studentMapper.toStudentDto(any(Student.class))).thenReturn(adam);
+        when(studentMapper.toDto(any(Student.class))).thenReturn(adam);
 
         StudentDto result = studentService.addNewStudent(adam);
 
@@ -65,9 +67,10 @@ class StudentServiceTest {
 
     @Test
     void shouldNotAddNewStudentBecauseStudentExistsWithDb() {
-        StudentDto adam = StudentDto.of("Adam", 112233L, "112233@student.wwe.pl", List.of(computerScience()));
+        StudentDto adam = StudentDto.of("Adam", 112233L, "112233@student.wwe.pl", null);
+        adam.setSemesterDirectionIds(List.of(2L));
 
-        when(studentMapper.toStudentDao(adam))
+        when(studentMapper.toEntity(adam))
                 .thenReturn(adamKowalskiWithoutPaymentList());
         when(studentRepository.existsByIndexNumber(112233L)).thenReturn(true);
 
@@ -80,6 +83,7 @@ class StudentServiceTest {
     @Test
     void shouldReturnWhenStudentByIdExists() {
         Long idStudent = 1L;
+
         when(studentRepository.findById(idStudent)).thenReturn(Optional.of(adamKowalskiWithoutPaymentList()));
 
         Student studentById = studentService.getStudentById(1L);
@@ -103,7 +107,7 @@ class StudentServiceTest {
         Long indexNumber = 112233L;
 
         when(studentRepository.findByIndexNumber(indexNumber)).thenReturn(Optional.of((adamKowalskiWithId())));
-        when(studentMapper.toStudentDto(adamKowalskiWithId())).thenReturn(adamKowalskiDto());
+        when(studentMapper.toDto(adamKowalskiWithId())).thenReturn(adamKowalskiDto());
 
         StudentDto studentByIndexNumber = studentService.getStudentByIndexNumber(indexNumber);
 

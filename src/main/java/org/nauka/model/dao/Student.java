@@ -1,5 +1,6 @@
 package org.nauka.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +25,8 @@ public class Student {
     private String email;
     @OneToMany
     private List<Payment> paymentList;
-    @OneToMany
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SemesterDirection> semesterDirections;
 
 }

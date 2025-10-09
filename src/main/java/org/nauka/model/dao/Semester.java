@@ -1,11 +1,12 @@
 package org.nauka.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,9 +22,7 @@ public class Semester {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long semesterId;
     private String name;
-    @JsonFormat(pattern = "yyyy-M-d")
     private LocalDate startDate;
-    @JsonFormat(pattern = "yyyy-M-d")
     private LocalDate endDate;
     @OneToMany
     private List<Student> student;

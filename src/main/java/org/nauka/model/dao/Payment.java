@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 @ToString
 public class Payment {
@@ -21,7 +22,6 @@ public class Payment {
 
     private LocalDate paymentDate;
 
-    @Setter
     private BigDecimal amount;
 
     @ManyToOne
