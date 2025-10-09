@@ -7,14 +7,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.nauka.exception.handler.service.AppException;
+import org.nauka.mapper.StudentMapper;
 import org.nauka.mapper.TuitionFeeMapper;
 import org.nauka.model.SemesterTest;
 import org.nauka.model.dao.PaymentStatus;
-import org.nauka.model.dao.Semester;
-import org.nauka.model.dao.Student;
 import org.nauka.model.dao.TuitionFee;
 import org.nauka.model.dto.TuitionFeeDto;
 import org.nauka.repository.PaymentRepository;
+import org.nauka.repository.SemesterRepository;
 import org.nauka.repository.TuitionFeeRepository;
 
 import java.math.BigDecimal;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.nauka.model.student.StudentDaoTestData.adamKowalskiWithId;
+import static org.nauka.model.student.StudentDtoTestData.adamKowalskiDto;
 import static org.nauka.model.tuitionFee.TuitionFeeDaoTest.setStatusNotPaidWhenNoPayments;
 import static org.nauka.model.tuitionFee.TuitionFeeDaoTest.tuitionFeePaid;
 import static org.nauka.model.tuitionFee.TuitionFeeDtoTest.tuitionFeePaidDto;
@@ -42,10 +42,13 @@ class TuitionFeeServiceTest implements SemesterTest {
     @Mock
     StudentService studentService;
     @Mock
-    SemesterService semesterService;
+    SemesterRepository semesterRepository;
 
     @Mock
     TuitionFeeMapper tuitionFeeMapper;
+
+    @Mock
+    StudentMapper studentMapper;
 
     @InjectMocks
     TuitionFeeService tuitionFeeService;
@@ -57,18 +60,16 @@ class TuitionFeeServiceTest implements SemesterTest {
 
     @Test
     void shouldAddTuitionFeeToSemester() {
-        Long idStudent = 1L;
-        Student adam = adamKowalskiWithId();
-        Semester semester = semesterSummer;
+        Long indexNumber = 112233L;
+        Long idSemester = 1L;
         BigDecimal amount = new BigDecimal("1000");
 
-        when(studentService.getStudentById(idStudent)).thenReturn(adam);
+        when(studentService.getStudentByIndexNumber(indexNumber)).thenReturn(adamKowalskiDto());
         when(tuitionFeeRepository.save(any(TuitionFee.class))).thenReturn(tuitionFeePaid());
-        when(semesterService.getSemesterById(semester.getSemesterId())).thenReturn(semester);
-        when(tuitionFeeMapper.toDtoTuitionFeeDto(any())).thenReturn(tuitionFeePaidDto(), tuitionFeePendingDto());
-        when(studentService.getStudentById(idStudent)).thenReturn(adam);
+        when(semesterRepository.findSemesterBySemesterId(idSemester)).thenReturn(semesterSummerDao);
+        when(tuitionFeeMapper.toDto(any())).thenReturn(tuitionFeePaidDto(), tuitionFeePendingDto());
 
-        TuitionFeeDto result = tuitionFeeService.addTuitionFees(adam.getIdStudent(), semester, amount);
+        TuitionFeeDto result = tuitionFeeService.addTuitionFees(indexNumber, idSemester, amount);
 
         assertNotNull(result);
         assertEquals(amount, result.getAmount());
@@ -78,18 +79,20 @@ class TuitionFeeServiceTest implements SemesterTest {
     //Jeśli amount == null powinno rzucić wyjątek
     @Test
     void shouldThrowExceptionWhenAmountIsNull() {
-        Long idStudent = 1L;
+        Long indexNumber = 1L;
+        Long idSemester = 1L;
 
         assertThrows(IllegalArgumentException.class, () ->
-                tuitionFeeService.addTuitionFees(idStudent, semesterSummer, null)
+                tuitionFeeService.addTuitionFees(indexNumber, idSemester, null)
         );
     }
 
     @Test
     void shouldThrowExceptionWhenAmountIsNegative() {
-        Long idStudent = 1L;
+        Long indexNumber = 112233L;
+        Long idSemester = 1L;
         assertThrows(IllegalArgumentException.class, () ->
-                tuitionFeeService.addTuitionFees(idStudent, semesterSummer, new BigDecimal("-1000"))
+                tuitionFeeService.addTuitionFees(indexNumber, idSemester, new BigDecimal("-1000"))
         );
     }
 
@@ -172,7 +175,7 @@ class TuitionFeeServiceTest implements SemesterTest {
         AppException exception = assertThrows(AppException.class,
                 () -> tuitionFeeService.getTuitionFeeById(idTuition));
 
-        assertTrue(exception.getMessage().contains("TuitionFee with id: " + idTuition + " not found"));
+        assertEquals(STR."TuitionFee with id \{idTuition} not found", exception.getMessage());
         verify(tuitionFeeRepository).findById(idTuition);
     }
 }

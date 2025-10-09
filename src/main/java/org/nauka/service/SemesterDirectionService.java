@@ -13,7 +13,6 @@ public class SemesterDirectionService {
 
     private final SemesterDirectionRepository semesterDirectionRepository;
 
-
     public SemesterDirection createNewSemesterDirection(String name) {
         SemesterDirection direction = new SemesterDirection(
                 name
@@ -26,6 +25,4 @@ public class SemesterDirectionService {
         return semesterDirectionRepository.findById(idSemesterDirection)
                 .orElseThrow(() -> new AppException("Semester_direction", idSemesterDirection, ErrorType.NOT_FOUND));
     }
-
-
 }

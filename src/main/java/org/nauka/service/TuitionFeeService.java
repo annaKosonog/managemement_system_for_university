@@ -30,7 +30,6 @@ public class TuitionFeeService {
         validateAmount(amount);
         StudentDto dto = studentService.getStudentByIndexNumber(indexNumber);
 
-
         TuitionFee entity = TuitionFee.of(
                 studentMapper.toEntity(dto),
                 semesterRepository.findSemesterBySemesterId(idSemester),

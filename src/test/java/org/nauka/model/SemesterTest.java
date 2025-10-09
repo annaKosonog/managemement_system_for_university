@@ -13,7 +13,11 @@ public interface SemesterTest {
     LocalDate endSemesterWinter = LocalDate.of(2025, 2, 28);
 
     Semester semesterSummer = new Semester("letni", startSemestersSummer, endSemestersSummer);
+
+    Semester semesterSummerDao = new Semester(1L, "letni", startSemestersSummer, endSemestersSummer, List.of(), null, List.of());
     Semester semesterWinter = new Semester("zimowy", startSemesterWinter, endSemesterWinter);
 
     SemesterDto semesterSummerDto = new SemesterDto(1L, "letni", startSemestersSummer, endSemestersSummer, List.of());
+
+    SemesterDto semesterWinterDto = new SemesterDto(2L, "zimowy", startSemesterWinter, endSemestersSummer, List.of());
 }

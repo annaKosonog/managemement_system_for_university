@@ -64,7 +64,7 @@ public class PaymentServiceTest {
                 .thenReturn(BigDecimal.valueOf(120));
         when(clock.instant()).thenReturn(Instant.parse("2025-02-25T10:00:00Z"));
         when(clock.getZone()).thenReturn(ZoneId.systemDefault());
-        when(paymentMapper.toPaymentDto(any(Payment.class))).thenReturn(expectedDto);
+        when(paymentMapper.toDto(any(Payment.class))).thenReturn(expectedDto);
 
         PaymentDto result = paymentService.registerPayment(studentId, feeId, amountPaid);
 
@@ -89,7 +89,7 @@ public class PaymentServiceTest {
 
         when(clock.instant()).thenReturn(Instant.parse("2025-02-25T10:00:00Z"));
         when(clock.getZone()).thenReturn(ZoneId.systemDefault());
-        when(paymentMapper.toPaymentDto(any(Payment.class))).thenReturn(expectedDto);
+        when(paymentMapper.toDto(any(Payment.class))).thenReturn(expectedDto);
 
         PaymentDto result = paymentService.registerPayment(studentId, feeId, amountPaid);
 

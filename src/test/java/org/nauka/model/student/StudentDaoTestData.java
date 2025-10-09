@@ -4,7 +4,6 @@ import org.nauka.model.dao.Student;
 
 import java.util.List;
 
-import static org.nauka.model.semesterDirection.SemesterDirectionDaoTest.administration;
 import static org.nauka.model.semesterDirection.SemesterDirectionDaoTest.computerScience;
 
 public class StudentDaoTestData {
@@ -18,6 +17,6 @@ public class StudentDaoTestData {
     }
 
     public static Student alaKotWithId() {
-        return new Student(2L, "Ala", 114477L, "114477@student.wwe.pl", List.of(), List.of(administration()));
+        return new Student(2L, "Ala", 114477L, "114477@student.wwe.pl", List.of(), List.of());
     }
 }

@@ -2,12 +2,10 @@ package org.nauka.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.nauka.model.dao.SemesterDirection;
 import org.nauka.model.dao.Student;
 import org.nauka.model.dto.StudentDto;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", uses = {EntityIdMapper.class})
 public interface StudentMapper {

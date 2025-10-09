@@ -29,6 +29,4 @@ public class PaymentDaoTest {
     public static Payment noPaidAfterTheFinalPaymentDate() {
         return new Payment(3L, alaKotWithId(), LocalDate.of(2025, 3, 29), new BigDecimal(1000), tuitionFeeNoPaid());
     }
-
-
 }

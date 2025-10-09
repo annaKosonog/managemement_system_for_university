@@ -46,7 +46,7 @@ class StudentControllerTest {
 
     @BeforeEach
     void setUp() {
-       mvc = MockMvcBuilders.standaloneSetup(studentController)
+        mvc = MockMvcBuilders.standaloneSetup(studentController)
                 .setControllerAdvice(new ExceptionsHandler()) // <- dorzucamy handler
                 .build();
         objectMapper = new ObjectMapper();

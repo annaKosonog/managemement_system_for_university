@@ -1,6 +1,5 @@
 package org.nauka.model.dao;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 

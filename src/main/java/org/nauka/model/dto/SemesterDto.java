@@ -1,7 +1,6 @@
 package org.nauka.model.dto;
 
 import lombok.*;
-import org.nauka.model.dao.Student;
 
 import java.time.LocalDate;
 import java.util.List;

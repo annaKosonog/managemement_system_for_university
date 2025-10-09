@@ -64,7 +64,6 @@ public class SemesterService {
         if (student.getSemesterDirections() == null) {
             return false;
         }
-
         return student.getSemesterDirections().stream()
                 .filter(dir -> dir.getSemester() != null)
                 .flatMap(dir -> dir.getSemester().stream())

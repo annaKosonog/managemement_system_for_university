@@ -22,7 +22,7 @@ public class StudentDto {
         studentDto.name = name;
         studentDto.indexNumber = indexNumber;
         studentDto.email = e_mail;
-     //   studentDto.semesters = semesters;
+        //   studentDto.semesters = semesters;
         studentDto.paymentIds = null;
         studentDto.semesterDirectionIds = semesterDirections;
         return studentDto;
