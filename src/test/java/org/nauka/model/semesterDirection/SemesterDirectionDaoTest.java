@@ -9,9 +9,14 @@ import static org.nauka.model.student.StudentDaoTestData.alaKotWithId;
 
 public class SemesterDirectionDaoTest {
 
-    public static SemesterDirection administration() {
+    public static SemesterDirection administrationWithoutId() {
+        return new SemesterDirection(null, null, List.of(semesterWinter), alaKotWithId(), List.of());
+    }
+
+    public static SemesterDirection administrationWithId() {
         return new SemesterDirection(1L, "ADMINISTRATION", List.of(semesterWinter), alaKotWithId(), List.of());
     }
+
 
     public static SemesterDirection computerScience() {
         return new SemesterDirection(2L, "COMPUTER SCIENCE", List.of(semesterWinter), null, List.of());
