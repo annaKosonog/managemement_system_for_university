@@ -56,7 +56,7 @@ public class SemesterServiceTest {
                 AppException.class,
                 () -> semesterService.getSemesterById(id)
         );
-        assertEquals("Semester with id " + id + " not found", exception.getMessage());
+        assertEquals(STR."Semester with id \{id} not found", exception.getMessage());
         verify(semesterRepository).findSemesterBySemesterId(id);
     }
 

@@ -16,6 +16,7 @@ public interface SemesterTest {
 
     Semester semesterSummerDao = new Semester(1L, "letni", startSemestersSummer, endSemestersSummer, List.of(), null, List.of());
     Semester semesterWinter = new Semester("zimowy", startSemesterWinter, endSemesterWinter);
+    Semester semesterWinterDao = new Semester(2L, "zimowy", startSemesterWinter, endSemesterWinter, List.of(), null, List.of());
 
     SemesterDto semesterSummerDto = new SemesterDto(1L, "letni", startSemestersSummer, endSemestersSummer, List.of());
 
