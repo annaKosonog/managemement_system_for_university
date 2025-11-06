@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  myDb:
+    image: postgres:16
+    container_name: management_system_for_university_db
+    environment:
+      POSTGRES_PASSWORD: 123
+      POSTGRES_USER: root
+      POSTGRES_DB: university
+    ports:
+      - 1001:5432

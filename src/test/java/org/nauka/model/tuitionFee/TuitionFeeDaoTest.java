@@ -7,8 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.nauka.model.SemesterTest.semesterWinter;
-import static org.nauka.model.semesterDirection.SemesterDirectionDaoTest.administration;
-import static org.nauka.model.semesterDirection.SemesterDirectionDaoTest.computerScience;
+import static org.nauka.model.semesterDirection.SemesterDirectionDaoTest.*;
 import static org.nauka.model.student.StudentDaoTestData.adamKowalskiWithId;
 import static org.nauka.model.student.StudentDaoTestData.alaKotWithId;
 
@@ -23,10 +22,10 @@ public class TuitionFeeDaoTest {
     }
 
     public static TuitionFee tuitionFeeNoPaid() {
-        return new TuitionFee(2L, alaKotWithId(), semesterWinter, administration(), new BigDecimal("1000"), LocalDate.of(2025, 2, 28), PaymentStatus.NOT_PAID);
+        return new TuitionFee(2L, alaKotWithId(), semesterWinter, administrationWithId(), new BigDecimal("1000"), LocalDate.of(2025, 2, 28), PaymentStatus.NOT_PAID);
     }
 
     public static TuitionFee tuitionFeeOverdue() {
-        return new TuitionFee(3L, alaKotWithId(), semesterWinter, administration(), new BigDecimal(1000), LocalDate.of(2025, 3, 17), PaymentStatus.OVERDUE);
+        return new TuitionFee(3L, alaKotWithId(), semesterWinter, administrationWithId(), new BigDecimal(1000), LocalDate.of(2025, 3, 17), PaymentStatus.OVERDUE);
     }
 }
