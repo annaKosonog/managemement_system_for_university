@@ -4,17 +4,17 @@ VALUES ('Jan Kowalski', 12345, 'jan.kowalski@uczelnia.pl'),
        ('Tomek Kowalski', 12347, 'tomek.kowalski@uczelnia.pl'),
        ('Wiktoria Test', 12348, 'wiktoria.test@uczelnia.pl');
 
-INSERT INTO semester (name, startDate, endDate, semesterDirection_id)
-VALUES ('Semestr 1', '2025-10-01', '2026-01-31', 1),
-       ('Semestr 1', '2025-10-01', '2026-01-31', 1),
-       ('Semestr 2', '2025-03-01', '2026-09-31', 2),
-       ('Semestr 2', '2025-03-01', '2026-09-31', 2);
-
-INSERT INTO semesterDirection (direction, student_id)
+INSERT INTO semester_direction (direction, student_id)
 VALUES ('Informatyka', 1),
        ('Matematyka', 2);
 
-INSERT INTO tuitionFee (student_id, semester_id, semester_direction_id, amount)
+INSERT INTO semester (name, start_date, end_date, semester_direction_id)
+VALUES ('Semestr 1', '2025-10-01', '2026-01-31', 1),
+       ('Semestr 1', '2025-10-01', '2026-01-31', 1),
+       ('Semestr 2', '2025-03-01', '2026-09-30', 2),
+       ('Semestr 2', '2025-03-01', '2026-09-30', 2);
+
+INSERT INTO tuition_fee (student_id, semester_id, semester_direction_id, amount)
 VALUES (1, 1, 1, 1200.00),
        (2, 2, 2, 1300.00),
        (3, 2, 2, 1300.00),

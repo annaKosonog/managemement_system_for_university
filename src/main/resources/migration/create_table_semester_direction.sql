@@ -1,11 +1,11 @@
-CREATE TABLE IF NOT EXISTS semesterDirection
+CREATE TABLE IF NOT EXISTS semester_direction
 (
-    idSemesterDirection bigserial primary key,
+    id_semester_direction bigserial primary key,
     direction           varchar,
     semester_id         bigint not null,
     student_id          bigint not null,
-    tuitionFee_id       bigint not null,
+    tuition_fee_id       bigint not null,
 
-    constraint fk_semesterDirection_student foreign key (student_id) references student(idStudent)
+    constraint fk_semester_direction_student foreign key (student_id) references student(id_student)
 
 );

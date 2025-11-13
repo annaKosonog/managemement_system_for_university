@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS student
 (
-    idStudent   BIGSERIAL PRIMARY KEY,
+    id_student   BIGSERIAL PRIMARY KEY,
     name        VARCHAR(255) NOT NULL,
-    indexNumber BIGINT       NOT NULL UNIQUE,
+    index_number BIGINT       NOT NULL UNIQUE,
     email       VARCHAR(255) NOT NULL
 );
 

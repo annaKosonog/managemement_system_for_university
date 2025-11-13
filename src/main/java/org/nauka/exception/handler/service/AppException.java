@@ -12,9 +12,10 @@ public class AppException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return switch (type) {
-            case NOT_FOUND -> STR."\{entity} with id \{value} not found";
-            case ALREADY_EXISTS -> STR."\{entity} with id \{value} already exists";
-        };
+        return null;
+//        return switch (type) {
+//            case NOT_FOUND -> STR."\{entity} with id \{value} not found";
+//            case ALREADY_EXISTS -> STR."\{entity} with id \{value} already exists";
+//        };
     }
 }
