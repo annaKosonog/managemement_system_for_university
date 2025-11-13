@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <!-- Wczytanie struktury tabel -->
+    <changeSet id="1-create-student" author="student">
+        <sqlFile path="migration/create_table_student.sql" relativeToChangelogFile="true" splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="2-create-semester_direction" author="student">
+        <sqlFile path="migration/create_table_semester_direction.sql" relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+
+    <changeSet id="3-create-semester" author="student">
+        <sqlFile path="migration/create_table_semester.sql" relativeToChangelogFile="true" splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="4-create-tuitionFee" author="student">
+        <sqlFile path="migration/create_table_tuitionFee.sql" relativeToChangelogFile="true" splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="5-create-payment" author="student">
+        <sqlFile path="migration/create_table_payment.sql" relativeToChangelogFile="true" splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="6-insert_into_table" author="student">
+        <sqlFile path="migration/insert_into_table.sql" relativeToChangelogFile="true" splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="7-alter_table" author="student">
+        <sqlFile path="migration/alter_table.sql" relativeToChangelogFile="true" splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+</databaseChangeLog>
