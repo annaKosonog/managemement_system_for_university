@@ -3,7 +3,6 @@ package org.nauka.model.dao;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,10 +22,6 @@ public class SemesterDirection {
     @OneToMany(mappedBy = "semesterDirection")
     private List<Semester> semester;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
-
     @Setter
     @OneToMany
     private List<TuitionFee> tuitionFee;
@@ -36,11 +31,10 @@ public class SemesterDirection {
         this.direction = direction;
     }
 
-    public SemesterDirection(Long idSemesterDirection, String direction, List<Semester> semesters, Student student, List<TuitionFee> tuitionFees) {
+    public SemesterDirection(Long idSemesterDirection, String direction, List<Semester> semesters, List<TuitionFee> tuitionFees) {
         this.idSemesterDirection = idSemesterDirection;
         this.direction = direction;
         this.semester = semesters; // albo jak nazywa się Twoje pole
-        this.student = student;
         this.tuitionFee = tuitionFees;
     }
 

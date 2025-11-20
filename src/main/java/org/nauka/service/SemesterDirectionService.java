@@ -23,7 +23,6 @@ public class SemesterDirectionService {
     private final SemesterDirectionMapper semesterDirectionMapper;
     private final SemesterRepository semesterRepository;
 
-
     @Transactional
     public SemesterDirectionDto createNewSemesterDirection(String name) {
         SemesterDirection direction = new SemesterDirection(
@@ -38,7 +37,6 @@ public class SemesterDirectionService {
         return semesterDirectionRepository.findById(idSemesterDirection)
                 .orElseThrow(() -> new AppException("Semester_direction", idSemesterDirection, ErrorType.NOT_FOUND));
     }
-
 
     @Transactional
     public SemesterDirectionDto addSemesterDirectionToSemester(Long idSemesterDirection, Long idSemester) {

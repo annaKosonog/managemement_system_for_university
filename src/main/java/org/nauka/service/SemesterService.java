@@ -51,7 +51,7 @@ public class SemesterService {
             throw new AppException("Semester", idSemester, ErrorType.ALREADY_EXISTS);
         }
 
-        if (semester.getStudent() == null) {
+        if (semester.getStudentDetails().getStudent() == null) {
             semester.setStudent(new ArrayList<>());
         }
         studentRepository.save(student);

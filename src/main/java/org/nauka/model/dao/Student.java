@@ -24,8 +24,4 @@ public class Student {
     private String email;
     @OneToMany
     private List<Payment> paymentList;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<SemesterDirection> semesterDirections;
-
 }

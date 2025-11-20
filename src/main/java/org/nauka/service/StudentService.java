@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
-
     private final StudentMapper studentMapper;
     private final SemesterDirectionService semesterDirectionService;
 

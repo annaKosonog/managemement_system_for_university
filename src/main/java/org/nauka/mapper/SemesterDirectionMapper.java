@@ -14,7 +14,6 @@ public interface SemesterDirectionMapper {
     @Mappings({
             @Mapping(source = "semesterIds", target = "semester"),
             @Mapping(source = "tuitionFeeIds", target = "tuitionFee"),
-            @Mapping(target = "student", ignore = true),
     })
     SemesterDirection toEntity(SemesterDirectionDto dto);
 

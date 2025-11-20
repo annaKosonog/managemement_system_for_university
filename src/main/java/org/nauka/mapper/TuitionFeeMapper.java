@@ -15,8 +15,6 @@ import java.util.List;
 )
 public interface TuitionFeeMapper {
 
-    @Mapping(source = "studentId", target = "student")
-    @Mapping(target = "tuitionFeeId", ignore = true)
     TuitionFee toEntity(TuitionFeeDto tuitionFeeDto);
 
     @Mapping(source = "student", target = "studentId")

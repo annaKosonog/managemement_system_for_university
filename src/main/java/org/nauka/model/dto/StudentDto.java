@@ -15,16 +15,15 @@ public class StudentDto {
     private Long indexNumber;
     private String email;
     private List<Long> paymentIds;
-    private List<Long> semesterDirectionIds;
 
-    public static StudentDto of(String name, java.lang.Long indexNumber, String e_mail, List<Long> semesterDirections) {
+
+    public static StudentDto of(String name, java.lang.Long indexNumber, String e_mail) {
         StudentDto studentDto = new StudentDto();
         studentDto.name = name;
         studentDto.indexNumber = indexNumber;
         studentDto.email = e_mail;
         //   studentDto.semesters = semesters;
         studentDto.paymentIds = null;
-        studentDto.semesterDirectionIds = semesterDirections;
         return studentDto;
     }
 }

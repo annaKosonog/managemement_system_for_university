@@ -46,7 +46,7 @@ class StudentServiceTest {
 
     @Test
     void shouldAddNewStudent() {
-        StudentDto adam = StudentDto.of("Adam", 112233L, "112233@student.wwe.pl", List.of(2L));
+        StudentDto adam = StudentDto.of("Adam", 112233L, "112233@student.wwe.pl");
 
         when(studentMapper.toEntity(adam))
                 .thenReturn(adamKowalskiWithoutPaymentList());
@@ -67,7 +67,7 @@ class StudentServiceTest {
 
     @Test
     void shouldNotAddNewStudentBecauseStudentExistsWithDb() {
-        StudentDto adam = StudentDto.of("Adam", 112233L, "112233@student.wwe.pl", null);
+        StudentDto adam = StudentDto.of("Adam", 112233L, "112233@student.wwe.pl");
         adam.setSemesterDirectionIds(List.of(2L));
 
         when(studentMapper.toEntity(adam))

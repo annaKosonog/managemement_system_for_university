@@ -1,6 +1,8 @@
 package org.nauka.model.dto;
 
 import lombok.*;
+import org.nauka.model.dao.StudentDetails;
+import org.nauka.model.dao.TuitionFee;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,4 +20,6 @@ public class SemesterDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private List<Long> studentIds;
+    private List<TuitionFee> tuitionFee;
+    private StudentDetails studentDetails;
 }

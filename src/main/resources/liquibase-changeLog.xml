@@ -43,5 +43,10 @@
         <sqlFile path="migration/alter_table.sql" relativeToChangelogFile="true" splitStatements="true"
                  stripComments="true"/>
     </changeSet>
+    <changeSet id="8-create_table_student_details" author="student">
+        <sqlFile path="migration/alter_table.sql" relativeToChangelogFile="true" splitStatements="true"
+                 stripComments="true"/>
+
+    </changeSet>
 
 </databaseChangeLog>

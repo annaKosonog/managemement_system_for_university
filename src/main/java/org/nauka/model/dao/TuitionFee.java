@@ -19,9 +19,6 @@ public class TuitionFee {
     private Long tuitionFeeId;
 
     @ManyToOne
-    private Student student;
-
-    @ManyToOne
     private Semester semester;
 
     @ManyToOne
@@ -35,9 +32,11 @@ public class TuitionFee {
     @Setter
     private PaymentStatus paymentStatus;
 
-    public static TuitionFee of(Student student, Semester idSemester, BigDecimal amount, PaymentStatus status) {
+    @ManyToOne
+    private StudentDetails studentDetails;
+
+    public static TuitionFee of(Semester idSemester, BigDecimal amount, PaymentStatus status) {
         TuitionFee fee = new TuitionFee();
-        fee.student = student;
         fee.semester = idSemester;
         fee.amount = amount;
         fee.paymentStatus = status;

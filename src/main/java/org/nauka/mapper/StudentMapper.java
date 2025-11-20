@@ -14,8 +14,7 @@ public interface StudentMapper {
     @Mapping(target = "idStudent", ignore = true)
     Student toEntity(StudentDto studentDto);
 
-    @Mapping(source = "paymentList", target = "paymentIds")
-    @Mapping(source = "semesterDirections", target = "semesterDirectionIds")
+
     StudentDto toDto(Student student);
 
     List<StudentDto> toDtoList(List<Student> entities);
